@@ -1,109 +1,120 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { navLinks, ui } from "../copy";
 import { SITE } from "../data";
 import { useI18n } from "../i18n";
 import { useLead } from "../lead";
 import { Logo } from "./Logo";
 
-function LangButton({ className = "" }: { className?: string }) {
-  const { t, toggleLocale } = useI18n();
-  return (
-    <button
-      type="button"
-      onClick={toggleLocale}
-      className={`min-h-11 px-3 text-[0.9rem] text-paper/70 hover:text-paper ${className}`}
-      aria-label={t(ui.langLabel)}
-    >
-      {t(ui.lang)}
-    </button>
-  );
-}
-
 export function Header() {
   const { openLead } = useLead();
-  const { t } = useI18n();
+  const { t, isAr, toggleLocale } = useI18n();
+  const { pathname, hash } = useLocation();
   const [menu, setMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    setMenu(false);
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menu ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menu]);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-40">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 md:px-8">
-        <Logo inverted />
-
-        <nav className="hidden items-center gap-1 lg:flex" aria-label={t(ui.nav.main)}>
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `px-3 py-2 text-[0.9rem] no-underline transition ${
-                  isActive ? "text-paper" : "text-paper/70 hover:text-paper"
-                }`
-              }
-            >
-              {t(link.label)}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="hidden items-center gap-2 lg:flex">
-          <LangButton />
-          <a
-            href={SITE.dashboard}
-            className="px-3 py-2 text-[0.9rem] text-paper/70 no-underline hover:text-paper"
-          >
-            {t(ui.nav.login)}
-          </a>
-          <button type="button" onClick={() => openLead()} className="btn-pill btn-on-dark">
-            {t(ui.nav.start)}
-          </button>
+    <header className={`fixed inset-x-0 top-0 z-40 ${scrolled || menu ? "bg-paper/70 backdrop-blur-xl" : ""}`}>
+      <div className="wrap flex items-center justify-between py-4 md:py-5">
+        <div className="flex min-w-0 items-center gap-10">
+          <Logo inverted />
+          <nav className="hidden items-center gap-7 md:flex" aria-label={t(ui.nav.main)}>
+            {navLinks.map((link) => {
+              const isHash = link.to.includes("#");
+              const on =
+                (isHash && pathname === "/" && hash === "#services") || (!isHash && pathname === link.to);
+              const className = `py-1 text-[1.02rem] no-underline ${
+                on ? "font-medium text-night" : "text-muted hover:text-night"
+              }`;
+              return isHash ? (
+                <Link key={link.to} to={link.to} className={className}>
+                  {t(link.label)}
+                </Link>
+              ) : (
+                <NavLink key={link.to} to={link.to} className={className}>
+                  {t(link.label)}
+                </NavLink>
+              );
+            })}
+          </nav>
         </div>
 
-        <div className="flex items-center gap-1 lg:hidden">
-          <LangButton />
+        <div className="flex items-center gap-2">
+          <button type="button" onClick={toggleLocale} className="lang-orb" aria-label={t(ui.langLabel)}>
+            {isAr ? "EN" : "ع"}
+          </button>
+          <button type="button" onClick={() => openLead()} className="btn-pill btn-night hidden min-h-11 text-[0.95rem] md:inline-flex">
+            {t(ui.nav.start)}
+          </button>
           <button
             type="button"
-            className="flex min-h-11 min-w-11 flex-col items-center justify-center gap-1.5"
+            className="orb-btn md:hidden"
             aria-expanded={menu}
             aria-label={menu ? t(ui.nav.closeMenu) : t(ui.nav.openMenu)}
             onClick={() => setMenu((v) => !v)}
           >
-            <span className={`h-0.5 w-6 bg-paper transition ${menu ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`h-0.5 w-6 bg-paper transition ${menu ? "opacity-0" : ""}`} />
-            <span className={`h-0.5 w-6 bg-paper transition ${menu ? "-translate-y-2 -rotate-45" : ""}`} />
+            <span className="flex flex-col items-center justify-center gap-1.5">
+              <span className={`h-px w-4 bg-night transition ${menu ? "translate-y-[5px] rotate-45" : ""}`} />
+              <span className={`h-px w-4 bg-night transition ${menu ? "opacity-0" : ""}`} />
+              <span className={`h-px w-4 bg-night transition ${menu ? "-translate-y-[5px] -rotate-45" : ""}`} />
+            </span>
           </button>
         </div>
       </div>
 
-      {menu ? (
-        <div className="border-t border-white/10 bg-ink px-5 py-4 lg:hidden">
-          <div className="flex flex-col">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                onClick={() => setMenu(false)}
-                className="min-h-11 py-3 text-paper no-underline"
-              >
-                {t(link.label)}
-              </Link>
-            ))}
-            <a href={SITE.dashboard} className="min-h-11 py-3 text-paper/70 no-underline">
-              {t(ui.nav.login)}
-            </a>
-            <button
-              type="button"
-              onClick={() => {
-                setMenu(false);
-                openLead();
-              }}
-              className="btn-pill btn-on-dark mt-2 self-start"
+      <div
+        className={`menu-liquid fixed inset-0 z-30 flex flex-col justify-between bg-paper px-[var(--page-x)] pt-28 pb-10 md:hidden ${
+          menu ? "is-open" : "pointer-events-none"
+        }`}
+        style={{ ["--cx" as string]: isAr ? "12%" : "88%" }}
+      >
+        <div className="flex flex-col">
+          {navLinks.map((link, index) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setMenu(false)}
+              className="min-h-14 border-b border-line py-4 text-2xl text-night no-underline"
             >
-              {t(ui.nav.start)}
-            </button>
-          </div>
+              <span className="me-3 text-sm text-muted" dir="ltr">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {t(link.label)}
+            </Link>
+          ))}
+          <a href={SITE.dashboard} className="min-h-14 py-4 text-2xl text-muted no-underline">
+            {t(ui.nav.login)}
+          </a>
         </div>
-      ) : null}
+        <button
+          type="button"
+          onClick={() => {
+            setMenu(false);
+            openLead();
+          }}
+          className="btn-pill btn-night self-start"
+        >
+          {t(ui.nav.start)}
+        </button>
+      </div>
     </header>
   );
 }

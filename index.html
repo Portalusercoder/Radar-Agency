@@ -12,19 +12,225 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      html.is-loading,
+      html.is-loading body {
+        overflow: hidden;
+      }
+
+      html.is-loading #root {
+        pointer-events: none;
+      }
+
+      #site-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        background: #070b18;
+        color: #5070ff;
+        transition: opacity 520ms ease, visibility 520ms ease;
+      }
+
+      #site-loader.is-leaving {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .radar-stage {
+        display: grid;
+        justify-items: center;
+        gap: 1.35rem;
+      }
+
+      .radar {
+        --ink: #5070ff;
+        --accent: #fd8256;
+        --corn: #ffde6a;
+        position: relative;
+        width: min(13.5rem, 58vw);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background:
+          repeating-radial-gradient(
+            circle at center,
+            transparent 0,
+            transparent 21.5%,
+            color-mix(in srgb, var(--ink) 16%, transparent) 22%,
+            transparent 23%
+          ),
+          radial-gradient(circle at center, #fbf8eb 58%, #f4edd4 100%);
+        box-shadow:
+          inset 0 0 0 1.5px color-mix(in srgb, var(--ink) 28%, transparent),
+          0 18px 40px color-mix(in srgb, var(--ink) 10%, transparent);
+        overflow: hidden;
+      }
+
+      .radar-cross,
+      .radar-cross::after {
+        position: absolute;
+        background: color-mix(in srgb, var(--ink) 20%, transparent);
+      }
+
+      .radar-cross {
+        top: 50%;
+        left: 8%;
+        right: 8%;
+        height: 1px;
+        transform: translateY(-50%);
+      }
+
+      .radar-cross::after {
+        content: "";
+        top: -46%;
+        left: 50%;
+        width: 1px;
+        height: 192%;
+        transform: translateX(-50%);
+      }
+
+      .radar-sweep {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 0deg,
+          color-mix(in srgb, var(--ink) 52%, transparent),
+          color-mix(in srgb, var(--accent) 22%, transparent) 42deg,
+          transparent 88deg
+        );
+        animation: radar-spin 1.5s linear infinite;
+        transform-origin: center;
+      }
+
+      .radar-core {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        background: var(--ink);
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--ink) 16%, transparent);
+      }
+
+      .radar-blip {
+        position: absolute;
+        top: 27%;
+        left: 68%;
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: radar-blip 1.5s linear infinite;
+      }
+
+      .radar-word {
+        margin: 0;
+        font-family: "Baloo Bhaijaan 2", sans-serif;
+        font-size: 1.35rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+
+      html[dir="ltr"] .radar-word {
+        letter-spacing: 0.04em;
+      }
+
+      html[lang="en"] .radar-word [data-ar],
+      html[lang="ar"] .radar-word [data-en] {
+        display: none;
+      }
+
+      @keyframes radar-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes radar-blip {
+        0%,
+        18% {
+          opacity: 0.15;
+          transform: scale(0.7);
+        }
+        28%,
+        46% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        70%,
+        100% {
+          opacity: 0.2;
+          transform: scale(0.8);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .radar-sweep,
+        .radar-blip {
+          animation: none;
+        }
+
+        .radar-blip {
+          opacity: 1;
+        }
+      }
+    </style>
     <script>
       try {
         var en = localStorage.getItem("radar-locale") === "en";
         document.documentElement.lang = en ? "en" : "ar";
         document.documentElement.dir = en ? "ltr" : "rtl";
         if (en) document.title = "Radar | Digital marketing for the Saudi market";
-      } catch (e) {}
+        if (sessionStorage.getItem("radar-seen") === "1") {
+          document.documentElement.classList.add("loader-skip");
+        } else {
+          document.documentElement.classList.add("is-loading");
+        }
+      } catch (e) {
+        document.documentElement.classList.add("is-loading");
+      }
     </script>
   </head>
   <body>
+    <div
+      id="site-loader"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label="رادار"
+    >
+      <div class="radar-stage">
+        <div class="radar" aria-hidden="true">
+          <span class="radar-cross"></span>
+          <span class="radar-sweep"></span>
+          <span class="radar-blip"></span>
+          <span class="radar-core"></span>
+        </div>
+        <p class="radar-word">
+          <span data-ar>رادار</span>
+          <span data-en>Radar</span>
+        </p>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var loader = document.getElementById("site-loader");
+        if (!loader) return;
+        loader.setAttribute(
+          "aria-label",
+          document.documentElement.lang === "en" ? "Loading Radar" : "جاري تحميل رادار",
+        );
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

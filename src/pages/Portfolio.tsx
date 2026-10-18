@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { FigureCard } from "../components/FigureCard";
 import { PageHero } from "../components/PageHero";
 import { ui } from "../copy";
 import { PORTFOLIO, type WorkCategory } from "../data";
@@ -22,17 +23,17 @@ export function Portfolio() {
   );
 
   return (
-    <main>
+    <main className="relative z-[1]">
       <PageHero kicker={t(ui.work.kicker)} title={t(ui.work.title)} lead={t(ui.work.lead)}>
-        <div className="mt-10 flex flex-wrap gap-2" role="tablist" aria-label={t(ui.work.filter)}>
+        <div className="mt-10 flex flex-wrap gap-7" role="tablist" aria-label={t(ui.work.filter)}>
           {filters.map((item) => (
             <button
               key={item.key}
               type="button"
+              role="tab"
+              aria-selected={filter === item.key}
               onClick={() => setFilter(item.key)}
-              className={`btn-pill ${
-                filter === item.key ? "btn-on-dark" : "border border-white/20 text-paper"
-              }`}
+              className={`tab ${filter === item.key ? "is-on" : ""}`}
             >
               {t(item.label)}
             </button>
@@ -40,28 +41,31 @@ export function Portfolio() {
         </div>
       </PageHero>
 
-      <section className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
-        {items.length === 0 ? (
-          <p className="py-12 text-muted">
-            {t(ui.work.empty)}{" "}
-            <button type="button" onClick={() => openLead()} className="text-ink underline">
-              {t(ui.work.emptyCta)}
-            </button>
-          </p>
-        ) : (
-          <div className="divide-y divide-line border-y border-line">
-            {items.map((item) => (
-              <article key={item.id} className="grid gap-4 py-10 md:grid-cols-[1fr_2fr]">
-                <div>
-                  <p className="kicker text-ink/50">{t(ui.work[item.category])}</p>
-                  <h2 className="display mt-2 text-2xl">{t(item.title)}</h2>
-                  <p className="mt-2 text-sm text-muted">{t(item.city)}</p>
-                </div>
-                <p className="text-lg text-muted">{t(item.text)}</p>
-              </article>
-            ))}
-          </div>
-        )}
+      <section className="section bg-paper pt-0">
+        <div className="wrap">
+          {items.length === 0 ? (
+            <p className="py-12 text-muted">
+              {t(ui.work.empty)}{" "}
+              <button type="button" onClick={() => openLead()} className="text-night underline">
+                {t(ui.work.emptyCta)}
+              </button>
+            </p>
+          ) : (
+            <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+              {items.map((item) => (
+                <FigureCard
+                  key={item.id}
+                  to={item.to}
+                  img={item.img}
+                  tag={t(ui.work[item.category])}
+                  title={t(item.title)}
+                  text={t(item.text)}
+                  meta={<span className="text-xs text-muted">{t(item.city)}</span>}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </main>
   );

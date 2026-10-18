@@ -7,7 +7,7 @@ export function WhatsApp() {
   return (
     <a
       href={`${SITE.whatsapp}?text=${encodeURIComponent(t(ui.waAsk))}`}
-      className="fixed bottom-5 end-5 z-40 flex min-h-12 min-w-12 items-center justify-center rounded-full bg-ink text-paper no-underline"
+      className="fixed bottom-5 end-5 z-40 flex min-h-12 min-w-12 items-center justify-center rounded-full bg-accent text-paper no-underline"
       aria-label={t(ui.whatsappAria)}
     >
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>

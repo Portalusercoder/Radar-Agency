@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Kicker } from "./Kicker";
 
 export function PageHero({
   kicker,
@@ -13,11 +12,11 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="bg-ink pt-32 pb-16 text-paper md:pb-24">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
-        {kicker ? <Kicker light>{kicker}</Kicker> : null}
-        <h1 className="display mt-4 max-w-4xl text-4xl md:text-6xl">{title}</h1>
-        {lead ? <p className="mt-5 max-w-xl text-lg text-paper/60">{lead}</p> : null}
+    <section className="relative z-[1] pb-10 pt-28 md:pb-14 md:pt-36">
+      <div className="wrap">
+        {kicker ? <p className="kicker">{kicker}</p> : null}
+        <h1 className="display mt-4 max-w-4xl text-[clamp(2.4rem,5.5vw,4.8rem)]">{title}</h1>
+        {lead ? <p className="mt-5 max-w-xl text-lg leading-8 text-muted">{lead}</p> : null}
         {children}
       </div>
     </section>

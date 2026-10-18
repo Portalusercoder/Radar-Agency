@@ -59,7 +59,7 @@ export function LeadModal() {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-ink/70"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         aria-label={t(ui.lead.close)}
         onClick={closeLead}
       />
@@ -67,7 +67,7 @@ export function LeadModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative w-full max-w-md bg-paper p-8"
+        className="glass relative w-full max-w-md p-8"
       >
         {status === "success" ? (
           <div className="py-6 text-center">
@@ -75,7 +75,7 @@ export function LeadModal() {
               {t(ui.lead.success)}
             </p>
             <p className="mt-3 text-muted">{t(ui.lead.successText)}</p>
-            <button type="button" onClick={closeLead} className="btn-pill btn-on-light mt-8">
+            <button type="button" onClick={closeLead} className="btn-pill btn-line mt-8">
               {t(ui.lead.close)}
             </button>
           </div>
@@ -97,7 +97,7 @@ export function LeadModal() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 min-h-11 w-full rounded-full border border-line bg-mist px-4"
+              className="mt-1 min-h-11 w-full rounded-full border border-line bg-mist px-4 text-night"
             />
 
             <label className="mt-4 block text-sm text-muted" htmlFor="lead-service">
@@ -107,7 +107,7 @@ export function LeadModal() {
               id="lead-service"
               value={service}
               onChange={(e) => setService(e.target.value)}
-              className="mt-1 min-h-11 w-full rounded-full border border-line bg-mist px-4"
+              className="mt-1 min-h-11 w-full rounded-full border border-line bg-mist px-4 text-night"
             >
               {SERVICE_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -148,13 +148,13 @@ export function LeadModal() {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className="btn-pill btn-on-light flex-1 disabled:opacity-60"
+                className="btn-pill btn-corn flex-1 disabled:opacity-60"
               >
                 {status === "submitting" ? t(ui.lead.sending) : t(ui.lead.send)}
               </button>
               <a
                 href={`${SITE.whatsapp}?text=${encodeURIComponent(t(ui.waStart))}`}
-                className="text-sm text-ink no-underline"
+                className="text-sm text-night no-underline"
               >
                 {t(ui.whatsapp)}
               </a>

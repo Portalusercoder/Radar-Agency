@@ -7,7 +7,5 @@ export function Kicker({
   children: ReactNode;
   light?: boolean;
 }) {
-  return (
-    <p className={`kicker ${light ? "text-paper/65" : "text-ink/50"}`}>{children}</p>
-  );
+  return <p className={`kicker ${light ? "text-paper/70" : ""}`}>{children}</p>;
 }

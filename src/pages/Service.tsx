@@ -17,9 +17,9 @@ export function Service() {
   const title = t(service.title);
 
   return (
-    <main>
+    <main className="relative z-[1]">
       <PageHero kicker={t(ui.service.kicker)} title={title} lead={t(service.promise)}>
-        <p className="mt-4 text-paper/70">
+        <p className="mt-4 text-muted">
           {service.customPrice ? (
             t(ui.home.customPrice)
           ) : (
@@ -33,52 +33,54 @@ export function Service() {
           <button
             type="button"
             onClick={() => openLead({ service: serviceLeadValue(slug) })}
-            className="btn-pill btn-on-dark"
+            className="btn-pill btn-night"
           >
-            {t(ui.service.book)}
+            {t(ui.home.requestService)}
           </button>
           <a
             href={`${SITE.whatsapp}?text=${encodeURIComponent(`${t(ui.service.wa)} ${title}`)}`}
-            className="btn-pill btn-ghost-dark"
+            className="btn-pill btn-line"
           >
             {t(ui.whatsapp)}
           </a>
         </div>
       </PageHero>
 
-      <section className="bg-paper">
-        <div className="mx-auto max-w-6xl px-5 py-20 md:px-8">
+      <section className="section bg-paper pt-4">
+        <div className="wrap">
           <Kicker>{t(ui.service.includes)}</Kicker>
-          <div className="mt-12 grid gap-10 md:grid-cols-2">
+          <div className="mt-8 grid gap-x-10 gap-y-10 md:grid-cols-2">
             {service.includes.map((item) => (
-              <div key={item.title.en}>
-                <h3 className="display text-xl">{t(item.title)}</h3>
-                <p className="mt-2 text-muted">{t(item.text)}</p>
+              <div key={item.title.en} className="border-t border-line pt-4">
+                <h3 className="text-lg font-bold">{t(item.title)}</h3>
+                <p className="mt-2 text-sm leading-7 text-muted">{t(item.text)}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-mist">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-2 md:px-8">
+      <section className="section bg-paper pt-0">
+        <div className="wrap grid gap-12 md:grid-cols-2">
           <div>
             <Kicker>{t(ui.service.why)}</Kicker>
-            <p className="mt-4 text-lg text-muted">{t(service.why)}</p>
+            <p className="mt-4 text-lg leading-8 text-muted">{t(service.why)}</p>
           </div>
-          <div className="grid gap-8">
+          <div className="grid gap-6">
             {service.stats.map((stat) => (
               <div key={stat.label.en} className="border-t border-line pt-4">
-                <p className="display text-3xl">{t(stat.value)}</p>
-                <p className="mt-1 text-muted">{t(stat.label)}</p>
+                <p className="display text-3xl" dir="ltr">
+                  {t(stat.value)}
+                </p>
+                <p className="mt-1 text-sm text-muted">{t(stat.label)}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
-        <Link to="/" className="text-muted no-underline hover:text-ink">
+      <div className="wrap pb-16">
+        <Link to="/" className="text-muted no-underline hover:text-night">
           ← {t(ui.service.back)}
         </Link>
       </div>

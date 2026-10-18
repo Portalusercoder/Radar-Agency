@@ -6,7 +6,7 @@ export function Terms() {
   const { t } = useI18n();
 
   return (
-    <main>
+    <main className="relative z-[1]">
       <PageHero title={t(ui.terms.title)} lead={t(ui.terms.intro)} />
       <article className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:pb-24">
         <h2 className="display text-2xl">{t(ui.terms.useTitle)}</h2>
