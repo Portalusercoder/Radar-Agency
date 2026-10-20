@@ -5,6 +5,7 @@ export const ui = {
   brand: { ar: "رادار", en: "Radar" },
   nav: {
     main: { ar: "التنقل الرئيسي", en: "Main navigation" },
+    home: { ar: "الرئيسية", en: "Home" },
     ads: { ar: "الإعلانات", en: "Ads" },
     social: { ar: "المنصات", en: "Social" },
     stores: { ar: "المتاجر", en: "Stores" },
@@ -68,6 +69,7 @@ export const ui = {
     seeServices: { ar: "كل الخدمات", en: "View all services" },
     featuredKicker: { ar: "من الفكرة إلى الطلب", en: "From idea to order" },
     featuredTitle: { ar: "نمنحك ظهورًا يبيع.", en: "We give you visibility that sells." },
+    featuredContact: { ar: "جاهز تبدأ؟ تواصل معنا", en: "Ready to get started? Contact us" },
     aboutTitle: {
       ar: "إنجازات وأرقام تتكلم عن نفسها.",
       en: "Achievements and Numbers That Speak for Themselves.",
@@ -75,6 +77,9 @@ export const ui = {
     fromRiyadh: { ar: "من الرياض", en: "From Riyadh" },
     ourStory: { ar: "طريقة رادار", en: "Our method" },
     processKicker: { ar: "كيف نشتغل", en: "Our process" },
+    processAside: { ar: "خطوة بخطوة", en: "Step-by-step" },
+    processPrev: { ar: "الخطوة السابقة", en: "Previous step" },
+    processNext: { ar: "الخطوة التالية", en: "Next step" },
     ctaBand: { ar: "خلّنا نلاقي القناة اللي تبيع.", en: "Let’s find the channel that sells." },
     burst: { ar: "قيس. أعلن. بع.", en: "Measure. Ads. Sales." },
     talk: { ar: "ابدأ محادثة", en: "Start a conversation" },
@@ -162,7 +167,9 @@ export const ui = {
     readCase: { ar: "اقرأ دراسة الحالة", en: "Read the case study" },
     journalKicker: { ar: "المدونة", en: "Journal" },
     journalTitle: { ar: "ملاحظات من تشغيل الحملات", en: "Notes from running campaigns" },
+    journalIndex: { ar: "المدونة / المقالات", en: "Journal / Articles" },
     allPosts: { ar: "كل المقالات", en: "All articles" },
+    readMore: { ar: "اقرأ المزيد", en: "Read More" },
   },
   numbers: [
     { value: { ar: "+12", en: "+12" }, to: 12, suffix: "", label: { ar: "ROAS حققناه لعملاء", en: "ROAS delivered for clients" } },
@@ -204,6 +211,7 @@ export const ui = {
     kicker: { ar: "جاهز نحدد لك القناة اللي تبيع؟", en: "Ready to find the channel that sells?" },
     title1: { ar: "اكتب اسمك.", en: "Leave your name." },
     title2: { ar: "نرجع لك من الرياض.", en: "We reply from Riyadh." },
+    nav: { ar: "التنقل", en: "Navigation" },
     contact: { ar: "تواصل", en: "Contact" },
     services: { ar: "الخدمات", en: "Services" },
     site: { ar: "الموقع", en: "Site" },

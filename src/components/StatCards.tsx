@@ -61,15 +61,19 @@ export function StatCards() {
   const { t } = useI18n();
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {ui.numbers.map((item) => (
-        <article key={item.label.en} className="stat-card">
-          <p className="display text-[clamp(2.6rem,5vw,4rem)]">
-            <CountUp to={item.to} suffix={item.suffix} />
-          </p>
-          <p className="mt-3 text-sm leading-6 text-muted">{t(item.label)}</p>
-        </article>
-      ))}
+    <div className="impact">
+      <p className="impact-pill">{t(ui.home.numbersKicker)}</p>
+      <h2 className="sr-only">{t(ui.home.numbersTitle)}</h2>
+      <div className="impact-grid">
+        {ui.numbers.map((item) => (
+          <article key={item.label.en} className="impact-item">
+            <p className="impact-label">{t(item.label)}</p>
+            <p className="impact-value">
+              <CountUp to={item.to} suffix={item.suffix} />
+            </p>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }

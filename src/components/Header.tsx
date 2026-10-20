@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { navLinks, ui } from "../copy";
 import { SITE } from "../data";
 import { useI18n } from "../i18n";
@@ -18,10 +18,10 @@ export function Header() {
   }, [pathname, hash]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const update = () => setScrolled(window.scrollY > 8);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   useEffect(() => {
@@ -32,61 +32,47 @@ export function Header() {
   }, [menu]);
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-40 ${scrolled || menu ? "bg-paper/70 backdrop-blur-xl" : ""}`}>
-      <div className="wrap flex items-center justify-between py-4 md:py-5">
-        <div className="flex min-w-0 items-center gap-10">
-          <Logo inverted />
-          <nav className="hidden items-center gap-7 md:flex" aria-label={t(ui.nav.main)}>
-            {navLinks.map((link) => {
-              const isHash = link.to.includes("#");
-              const on =
-                (isHash && pathname === "/" && hash === "#services") || (!isHash && pathname === link.to);
-              const className = `py-1 text-[1.02rem] no-underline ${
-                on ? "font-medium text-night" : "text-muted hover:text-night"
-              }`;
-              return isHash ? (
-                <Link key={link.to} to={link.to} className={className}>
-                  {t(link.label)}
-                </Link>
-              ) : (
-                <NavLink key={link.to} to={link.to} className={className}>
-                  {t(link.label)}
-                </NavLink>
-              );
-            })}
-          </nav>
-        </div>
+    <header className="nav-float">
+      <div className={`nav-pill ${scrolled ? "is-scrolled" : ""}`}>
+        <Logo />
 
-        <div className="flex items-center gap-2">
-          <button type="button" onClick={toggleLocale} className="lang-orb" aria-label={t(ui.langLabel)}>
+        <div className="nav-pill__tools">
+          <a href={SITE.dashboard} className="nav-tool" aria-label={t(ui.nav.login)}>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden>
+              <circle cx="12" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.6" />
+              <path d="M5.5 19.2c1.4-3 3.7-4.5 6.5-4.5s5.1 1.5 6.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </a>
+          <button type="button" onClick={toggleLocale} className="nav-tool" aria-label={t(ui.langLabel)}>
             {isAr ? "EN" : "ع"}
           </button>
-          <button type="button" onClick={() => openLead()} className="btn-pill btn-night hidden min-h-11 text-[0.95rem] md:inline-flex">
+          <button type="button" onClick={() => openLead()} className="nav-start">
             {t(ui.nav.start)}
+            <span aria-hidden className="ms-1 rtl:rotate-180">
+              →
+            </span>
           </button>
           <button
             type="button"
-            className="orb-btn md:hidden"
+            className="nav-tool nav-burger"
             aria-expanded={menu}
             aria-label={menu ? t(ui.nav.closeMenu) : t(ui.nav.openMenu)}
             onClick={() => setMenu((v) => !v)}
           >
             <span className="flex flex-col items-center justify-center gap-1.5">
-              <span className={`h-px w-4 bg-night transition ${menu ? "translate-y-[5px] rotate-45" : ""}`} />
-              <span className={`h-px w-4 bg-night transition ${menu ? "opacity-0" : ""}`} />
-              <span className={`h-px w-4 bg-night transition ${menu ? "-translate-y-[5px] -rotate-45" : ""}`} />
+              <span className={`h-px w-4 bg-current transition ${menu ? "translate-y-[5px] rotate-45" : ""}`} />
+              <span className={`h-px w-4 bg-current transition ${menu ? "opacity-0" : ""}`} />
+              <span className={`h-px w-4 bg-current transition ${menu ? "-translate-y-[5px] -rotate-45" : ""}`} />
             </span>
           </button>
         </div>
       </div>
 
       <div
-        className={`menu-liquid fixed inset-0 z-30 flex flex-col justify-between bg-paper px-[var(--page-x)] pt-28 pb-10 md:hidden ${
-          menu ? "is-open" : "pointer-events-none"
-        }`}
+        className={`menu-liquid ${menu ? "is-open" : "pointer-events-none"}`}
         style={{ ["--cx" as string]: isAr ? "12%" : "88%" }}
       >
-        <div className="flex flex-col">
+        <nav className="flex flex-col" aria-label={t(ui.nav.main)}>
           {navLinks.map((link, index) => (
             <Link
               key={link.to}
@@ -103,14 +89,14 @@ export function Header() {
           <a href={SITE.dashboard} className="min-h-14 py-4 text-2xl text-muted no-underline">
             {t(ui.nav.login)}
           </a>
-        </div>
+        </nav>
         <button
           type="button"
           onClick={() => {
             setMenu(false);
             openLead();
           }}
-          className="btn-pill btn-night self-start"
+          className="btn-pill btn-hero self-start"
         >
           {t(ui.nav.start)}
         </button>

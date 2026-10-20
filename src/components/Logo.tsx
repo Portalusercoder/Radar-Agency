@@ -39,16 +39,8 @@ export function Mark({
 export function Logo({ inverted = false }: { inverted?: boolean }) {
   const { t } = useI18n();
   return (
-    <Link
-      to="/"
-      className={`flex shrink-0 items-center gap-2.5 no-underline ${inverted ? "text-paper" : "text-night"}`}
-      aria-label={t(ui.brandHome)}
-    >
+    <Link to="/" className="flex shrink-0 items-center no-underline" aria-label={t(ui.brandHome)}>
       <Mark inverted={inverted} className="h-7 w-[5.6rem]" />
-      <span className="flex flex-col leading-none">
-        <span className="brand-type text-[1.2rem] font-bold">{t(ui.brand)}</span>
-        <span className="mt-0.5 text-[0.58rem] font-semibold tracking-[0.22em] text-muted">RADAR</span>
-      </span>
     </Link>
   );
 }

@@ -67,7 +67,7 @@ export function LeadModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="glass relative w-full max-w-md p-8"
+        className="panel relative w-full max-w-md p-8"
       >
         {status === "success" ? (
           <div className="py-6 text-center">

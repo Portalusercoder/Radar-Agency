@@ -26,12 +26,10 @@ export function FigureCard({
           </span>
         ) : null}
       </div>
-      <h3 className="mt-4 text-[1.05rem] font-semibold leading-snug">{title}</h3>
+      {tag ? <p className="kicker mt-4">{tag}</p> : null}
+      <h3 className={`${tag ? "mt-2" : "mt-4"} text-[1.05rem] font-semibold leading-snug`}>{title}</h3>
       {text ? <p className="mt-2 line-clamp-2 text-[0.82rem] leading-6 text-muted">{text}</p> : null}
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {tag ? <span className="tag">{tag}</span> : null}
-        {meta ? <span className="text-[0.72rem] text-muted">{meta}</span> : null}
-      </div>
+      {meta ? <p className="mt-2 text-[0.72rem] text-muted">{meta}</p> : null}
     </>
   );
 

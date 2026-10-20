@@ -1,18 +1,31 @@
 import { Link } from "react-router-dom";
-import { FigureCard } from "../components/FigureCard";
+import { ProcessSteps } from "../components/ProcessSteps";
 import { ProofSlider } from "../components/ProofSlider";
 import { Reveal } from "../components/Reveal";
-import { ServiceGlyph } from "../components/ServiceGlyph";
+import { ServicesStack } from "../components/ServicesStack";
 import { StatCards } from "../components/StatCards";
 import { WorkCarousel } from "../components/WorkCarousel";
 import { ui } from "../copy";
-import { POSTS, SERVICES, SITE, serviceLeadValue } from "../data";
+import { POSTS, SERVICES, SITE } from "../data";
 import { useI18n } from "../i18n";
 import { useLead } from "../lead";
 
-const featured = SERVICES.slice(0, 2);
-const featuredShots = ["/media/phone.jpg", "/media/snap.jpg"];
+const featuredSlugs = ["advertisement", "social-media", "online-stores"] as const;
+const featuredShots: Record<(typeof featuredSlugs)[number], string> = {
+  advertisement: "/media/phone.jpg",
+  "social-media": "/media/snap.jpg",
+  "online-stores": "/media/store.jpg",
+};
+const featured = featuredSlugs.map((slug) => SERVICES.find((service) => service.slug === slug)!);
 const journalShot = ["/media/portrait.jpg", "/media/pack.jpg", "/media/phone.jpg"];
+
+function Marked({ text, marks }: { text: string; marks: string[] }) {
+  if (!marks.length) return text;
+  const pattern = new RegExp(`(${marks.map((mark) => mark.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`, "g");
+  return text.split(pattern).map((part, index) =>
+    marks.includes(part) ? <em key={`${part}-${index}`}>{part}</em> : part,
+  );
+}
 
 export function Home() {
   const { openLead } = useLead();
@@ -22,195 +35,166 @@ export function Home() {
   return (
     <main className="relative z-[1]">
       <section id="home-hero" className="hero">
-        <div className="hero__media">
-          <img src="/media/hero.jpg" alt="" />
-        </div>
-        <div className="hero__glow" />
-        <div className="hero__glow hero__glow--alt" />
-        <div className="hero__inner wrap">
-          <p className="kicker">{t(ui.home.heroKicker)}</p>
-          <h1 className="display mt-5 max-w-5xl text-[clamp(2.5rem,8vw,7.4rem)]">
-            <span className="block text-[0.72em] text-night/80">{lines[0]}</span>
-            <span className="mt-1 block">{lines[1]}</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-[1.05rem] leading-[1.85] text-muted">{t(ui.home.lead)}</p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button type="button" onClick={() => openLead()} className="btn-pill btn-night">
-              {t(ui.home.joinCta)}
-            </button>
-            <a href="#services" className="btn-pill btn-line">
-              {t(ui.home.exploreCta)}
-            </a>
-            <a
-              href={`${SITE.whatsapp}?text=${encodeURIComponent(t(ui.waStart))}`}
-              className="btn-pill btn-ghost"
-            >
-              {t(ui.whatsapp)}
-            </a>
-          </div>
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <p className="max-w-[12rem] text-xs leading-5 text-muted">{t(ui.home.trustLine)}</p>
-            <div className="flex flex-wrap gap-2">
-              {ui.home.ticker.slice(0, 5).map((item) => (
-                <span key={item.en} className="trust-orb">
-                  {t(item)}
+        <div className="hero__grid" aria-hidden />
+        <div className="hero__burst" aria-hidden />
+        <p className="hero__mega" aria-hidden>
+          {t(ui.brand)}
+        </p>
+        <div className="hero__inner">
+          <h1 className="display max-w-[22rem] text-[clamp(1.7rem,3.8vw,3.15rem)] leading-[1.2] md:max-w-[28rem]">
+            <span className="hero-line">
+              {lines[0].split(/\s+/).map((word, index) => (
+                <span key={`${word}-${index}`} className="hero-word">
+                  <span style={{ animationDelay: `${160 + index * 60}ms` }}>{word}</span>
                 </span>
               ))}
-            </div>
-          </div>
+            </span>
+            <span className="hero-line mt-1">
+              {lines[1].split(/\s+/).map((word, index) => (
+                <span key={`${word}-${index}`} className="hero-word">
+                  <span style={{ animationDelay: `${380 + index * 60}ms` }}>{word}</span>
+                </span>
+              ))}
+            </span>
+          </h1>
+          <button
+            type="button"
+            onClick={() => openLead()}
+            className="btn-pill btn-hero hero-rise mt-8 min-h-12"
+            style={{ animationDelay: "720ms" }}
+          >
+            {t(ui.home.joinCta)}
+            <span aria-hidden className="ms-2 rtl:rotate-180">
+              →
+            </span>
+          </button>
         </div>
+        <nav className="hero-social" aria-label={t(ui.nav.social)}>
+          <a href={SITE.instagram} rel="noreferrer">
+            {t(ui.footer.instagram)}
+          </a>
+          <a href={SITE.twitter} rel="noreferrer">
+            {t(ui.footer.x)}
+          </a>
+          <a href={SITE.linkedin} rel="noreferrer">
+            {t(ui.footer.linkedin)}
+          </a>
+        </nav>
       </section>
 
-      <section className="section">
+      <section id="from-idea" className="idea section">
         <div className="wrap">
           <Reveal>
-            <p className="kicker">{t(ui.home.featuredKicker)}</p>
-            <h2 className="display mt-3 max-w-3xl text-[clamp(2rem,4.6vw,4.2rem)]">{t(ui.home.featuredTitle)}</h2>
+            <div className="idea-head">
+              <h2 className="display max-w-xl text-[clamp(1.85rem,4.2vw,3.35rem)] leading-[1.15]">
+                <span className="block">{t(ui.home.featuredKicker)}.</span>
+                <span className="block">{t(ui.home.featuredTitle)}</span>
+              </h2>
+              <button type="button" onClick={() => openLead()} className="idea-contact">
+                {t(ui.home.featuredContact)}
+              </button>
+            </div>
           </Reveal>
-          <div className="mt-12 grid gap-8 lg:grid-cols-2">
+          <div className="idea-list">
             {featured.map((service, index) => (
-              <Reveal key={service.slug} delay={index * 80}>
-                <article className="service-card overflow-hidden p-0">
-                  <div className="shot aspect-[16/10] rounded-none">
-                    <img src={featuredShots[index]} alt="" loading="lazy" />
+              <Reveal key={service.slug} delay={index * 70}>
+                <Link to={`/services/${service.slug}`} className="idea-row">
+                  <div className="idea-shot">
+                    <img src={featuredShots[service.slug]} alt="" loading="lazy" />
                   </div>
-                  <div className="p-6">
-                    <p className="service-no" dir="ltr">
+                  <div className="idea-copy">
+                    <p className="idea-no" dir="ltr">
                       {String(index + 1).padStart(2, "0")}
                     </p>
-                    <h3 className="mt-3 text-2xl font-semibold md:text-3xl">{t(service.title)}</h3>
-                    <p className="mt-3 max-w-md text-sm leading-7 text-muted">{t(service.promise)}</p>
-                    <Link
-                      to={`/services/${service.slug}`}
-                      className="mt-5 inline-flex text-sm font-semibold text-night no-underline hover:text-accent"
-                    >
-                      {t(ui.home.learnMore)}
-                    </Link>
+                    <div>
+                      <h3>{t(service.title)}</h3>
+                      <p>{t(service.promise)}</p>
+                    </div>
                   </div>
-                </article>
+                </Link>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="work" className="section">
+      <section id="work" className="work section">
         <div className="wrap">
           <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="kicker">{t(ui.home.workKicker)}</p>
-                <h2 className="display mt-3 text-[clamp(2rem,4.6vw,4.2rem)]">{t(ui.home.workTitle)}</h2>
-              </div>
-              <Link to="/portfolio" className="text-sm font-semibold text-muted no-underline hover:text-night">
+            <div className="work-head">
+              <h2 className="kicker">{t(ui.home.workKicker)}</h2>
+              <Link to="/portfolio" className="work-all">
                 {t(ui.home.workAll)}
               </Link>
             </div>
           </Reveal>
-          <div className="mt-12">
-            <WorkCarousel />
-          </div>
+          <WorkCarousel />
         </div>
       </section>
 
-      <section className="section">
-        <div className="wrap grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] lg:gap-16">
+      <section id="about" className="about section">
+        <div className="wrap">
           <Reveal>
-            <p className="kicker">{t(ui.home.philosophyKicker)}</p>
-            <h2 className="display mt-3 text-[clamp(2rem,4.6vw,4.2rem)]">{t(ui.home.philosophyTitle)}</h2>
-            <p className="mt-6 max-w-xl text-[1.02rem] leading-8 text-muted">{t(ui.home.philosophyText)}</p>
-            <div className="mt-10 grid gap-6 md:grid-cols-2">
-              <div className="glass p-5">
-                <h3 className="text-lg font-semibold">{t(ui.home.missionTitle)}</h3>
-                <p className="mt-2 text-sm leading-7 text-muted">{t(ui.home.missionText)}</p>
-              </div>
-              <div className="glass p-5">
-                <h3 className="text-lg font-semibold">{t(ui.home.visionTitle)}</h3>
-                <p className="mt-2 text-sm leading-7 text-muted">{t(ui.home.visionText)}</p>
-              </div>
-            </div>
+            <p className="kicker">{t(ui.home.aboutKicker)}</p>
+            <h2 className="display mt-3 max-w-3xl text-[clamp(1.85rem,4.2vw,3.35rem)] leading-[1.15]">
+              {t(ui.home.philosophyTitle)}
+            </h2>
           </Reveal>
-          <Reveal delay={80}>
-            <div className="shot aspect-[4/5] max-h-[40rem]">
+          <div className="about-copy">
+            <p>
+              <Marked
+                text={t(ui.home.philosophyText)}
+                marks={isAr ? ["رادار", "سلة", "زد"] : ["Radar", "Salla", "Zid"]}
+              />
+            </p>
+            <div id="about-mission" className="about-block">
+              <h3>{t(ui.home.missionTitle)}</h3>
+              <p>
+                <Marked
+                  text={t(ui.home.missionText).trim()}
+                  marks={isAr ? ["قوقل", "سناب", "تيك توك"] : ["Google", "Snapchat", "TikTok"]}
+                />
+              </p>
+            </div>
+            <div id="about-vision" className="about-block">
+              <h3>{t(ui.home.visionTitle)}</h3>
+              <p>
+                <Marked
+                  text={t(ui.home.visionText)}
+                  marks={isAr ? ["بالريال", "الإعجابات"] : ["riyals", "likes"]}
+                />
+              </p>
+            </div>
+          </div>
+          <div className="about-split">
+            <blockquote className="about-quote">
+              <p>{t(ui.home.shout)}</p>
+              <footer>
+                {t(ui.brand)}, {t(ui.home.fromRiyadh)}
+              </footer>
+            </blockquote>
+            <figure className="about-side">
               <img src="/media/portrait.jpg" alt="" loading="lazy" />
-            </div>
-          </Reveal>
+            </figure>
+          </div>
         </div>
       </section>
 
       <section id="method-steps" className="section">
         <div className="wrap">
           <Reveal>
-            <p className="kicker">{t(ui.home.processKicker)}</p>
-            <h2 className="display mt-3 max-w-3xl text-[clamp(2rem,4.6vw,4.2rem)]">{t(ui.home.expectTitle)}</h2>
+            <ProcessSteps />
           </Reveal>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {ui.steps.map((step, index) => (
-              <Reveal key={step.title.en} delay={index * 60}>
-                <div className="glass h-full p-6">
-                  <p className="service-no" dir="ltr">
-                    {String(index + 1).padStart(2, "0")} / {String(ui.steps.length).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-4 text-xl font-semibold">{t(step.title)}</h3>
-                  <p className="mt-3 text-sm leading-7 text-muted">{t(step.text)}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
-      <section id="services" className="section">
-        <div className="wrap">
-          <Reveal>
-            <p className="kicker">{t(ui.home.servicesKicker)}</p>
-            <h2 className="display mt-3 max-w-3xl text-[clamp(2rem,4.6vw,4.2rem)]">{t(ui.home.servicesTitle)}</h2>
-          </Reveal>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {SERVICES.map((service, index) => (
-              <Reveal key={service.slug} delay={(index % 3) * 50}>
-                <article className="service-card">
-                  <div className="flex items-center justify-between gap-3">
-                    <ServiceGlyph name={service.icon} />
-                    <span className="service-no" dir="ltr">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <h3 className="mt-5 text-xl font-semibold">{t(service.title)}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-7 text-muted">{t(service.promise)}</p>
-                  <p className="mt-4 text-sm text-muted">
-                    {service.customPrice
-                      ? t(ui.home.customPrice)
-                      : `${t(ui.home.from)} ${service.from} ${t(ui.home.sar)}`}
-                  </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    <Link to={`/services/${service.slug}`} className="btn-pill btn-line text-sm">
-                      {t(ui.home.learnMore)}
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => openLead({ service: serviceLeadValue(service.slug) })}
-                      className="btn-pill btn-ghost text-sm"
-                    >
-                      {t(ui.home.requestService)}
-                    </button>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServicesStack />
 
       <section className="section">
         <div className="wrap">
           <Reveal>
-            <p className="kicker">{t(ui.home.numbersKicker)}</p>
-            <h2 className="display mt-3 max-w-4xl text-[clamp(2rem,4.6vw,4.2rem)]">{t(ui.home.numbersTitle)}</h2>
-          </Reveal>
-          <div className="mt-12">
             <StatCards />
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -245,28 +229,34 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section id="journal" className="journal section">
         <div className="wrap">
           <Reveal>
-            <div className="flex items-end justify-between gap-6">
-              <h2 className="display text-[clamp(1.8rem,4vw,3.4rem)]">{t(ui.home.journalTitle)}</h2>
-              <Link to="/blog" className="hidden text-sm font-semibold text-muted no-underline hover:text-night md:inline">
-                {t(ui.home.allPosts)}
-              </Link>
-            </div>
+            <h2 className="journal-title">{t(ui.home.journalIndex)}</h2>
           </Reveal>
-          <div className="mt-12 grid gap-x-6 gap-y-12 md:grid-cols-3">
+          <div className="journal-list">
             {POSTS.slice(0, 3).map((post, index) => (
-              <FigureCard
-                key={post.slug}
-                to={`/blog/${post.slug}`}
-                img={journalShot[index] ?? "/media/city.jpg"}
-                tag={t(post.category === "cases" ? ui.blog.cases : ui.blog.journal)}
-                title={t(post.title)}
-                text={t(post.excerpt)}
-              />
+              <article key={post.slug} className="journal-row">
+                <Link to={`/blog/${post.slug}`} className="journal-shot">
+                  <img src={journalShot[index] ?? "/media/city.jpg"} alt="" loading="lazy" />
+                </Link>
+                <div className="journal-body">
+                  <p className="journal-date">{t(post.date)}</p>
+                  <h3>
+                    <Link to={`/blog/${post.slug}`}>{t(post.title)}</Link>
+                  </h3>
+                  <p>{t(post.excerpt)}</p>
+                  <Link to={`/blog/${post.slug}`} className="journal-more">
+                    {t(ui.home.readMore)}
+                    <span aria-hidden>↗</span>
+                  </Link>
+                </div>
+              </article>
             ))}
           </div>
+          <Link to="/blog" className="journal-all">
+            {t(ui.home.allPosts)}
+          </Link>
         </div>
       </section>
     </main>
