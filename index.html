@@ -25,14 +25,18 @@
         pointer-events: none;
       }
 
+      html.loader-skip #site-loader {
+        display: none;
+      }
+
       #site-loader {
         position: fixed;
         inset: 0;
         z-index: 100;
         display: grid;
         place-items: center;
-        background: #070b18;
-        color: #5070ff;
+        background: #f4f1ec;
+        color: #14161c;
         transition: opacity 520ms ease, visibility 520ms ease;
       }
 
@@ -42,146 +46,18 @@
         pointer-events: none;
       }
 
-      .radar-stage {
-        display: grid;
-        justify-items: center;
-        gap: 1.35rem;
+      .loader-mark {
+        width: 6.8rem;
+        height: auto;
+        overflow: visible;
       }
 
-      .radar {
-        --ink: #5070ff;
-        --accent: #fd8256;
-        --corn: #ffde6a;
-        position: relative;
-        width: min(13.5rem, 58vw);
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background:
-          repeating-radial-gradient(
-            circle at center,
-            transparent 0,
-            transparent 21.5%,
-            color-mix(in srgb, var(--ink) 16%, transparent) 22%,
-            transparent 23%
-          ),
-          radial-gradient(circle at center, #fbf8eb 58%, #f4edd4 100%);
-        box-shadow:
-          inset 0 0 0 1.5px color-mix(in srgb, var(--ink) 28%, transparent),
-          0 18px 40px color-mix(in srgb, var(--ink) 10%, transparent);
-        overflow: hidden;
-      }
-
-      .radar-cross,
-      .radar-cross::after {
-        position: absolute;
-        background: color-mix(in srgb, var(--ink) 20%, transparent);
-      }
-
-      .radar-cross {
-        top: 50%;
-        left: 8%;
-        right: 8%;
-        height: 1px;
-        transform: translateY(-50%);
-      }
-
-      .radar-cross::after {
-        content: "";
-        top: -46%;
-        left: 50%;
-        width: 1px;
-        height: 192%;
-        transform: translateX(-50%);
-      }
-
-      .radar-sweep {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        background: conic-gradient(
-          from 0deg,
-          color-mix(in srgb, var(--ink) 52%, transparent),
-          color-mix(in srgb, var(--accent) 22%, transparent) 42deg,
-          transparent 88deg
-        );
-        animation: radar-spin 1.5s linear infinite;
-        transform-origin: center;
-      }
-
-      .radar-core {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0.7rem;
-        height: 0.7rem;
-        border-radius: 50%;
-        background: var(--ink);
-        transform: translate(-50%, -50%);
-        box-shadow: 0 0 0 4px color-mix(in srgb, var(--ink) 16%, transparent);
-      }
-
-      .radar-blip {
-        position: absolute;
-        top: 27%;
-        left: 68%;
-        width: 0.55rem;
-        height: 0.55rem;
-        border-radius: 50%;
-        background: var(--accent);
-        animation: radar-blip 1.5s linear infinite;
-      }
-
-      .radar-word {
-        margin: 0;
-        font-family: Geist, "Plus Jakarta Sans", "Noto Sans Arabic", sans-serif;
-        font-size: 1.35rem;
-        font-weight: 800;
-        letter-spacing: -0.04em;
-        line-height: 1;
-      }
-
-      html[dir="ltr"] .radar-word {
-        letter-spacing: 0.04em;
-      }
-
-      html[lang="en"] .radar-word [data-ar],
-      html[lang="ar"] .radar-word [data-en] {
-        display: none;
-      }
-
-      @keyframes radar-spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      @keyframes radar-blip {
-        0%,
-        18% {
-          opacity: 0.15;
-          transform: scale(0.7);
-        }
-        28%,
-        46% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        70%,
-        100% {
-          opacity: 0.2;
-          transform: scale(0.8);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .radar-sweep,
-        .radar-blip {
-          animation: none;
-        }
-
-        .radar-blip {
-          opacity: 1;
-        }
+      .loader-mark path,
+      .loader-mark rect {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 28;
       }
     </style>
     <script>
@@ -208,18 +84,13 @@
       aria-busy="true"
       aria-label="رادار"
     >
-      <div class="radar-stage">
-        <div class="radar" aria-hidden="true">
-          <span class="radar-cross"></span>
-          <span class="radar-sweep"></span>
-          <span class="radar-blip"></span>
-          <span class="radar-core"></span>
-        </div>
-        <p class="radar-word">
-          <span data-ar>رادار</span>
-          <span data-en>Radar</span>
-        </p>
-      </div>
+      <svg class="loader-mark" viewBox="0 0 900.07 319" fill="none" aria-hidden="true">
+        <path data-fill="#fd8256" d="M83.43,33.37h0a31.34,31.34,0,0,0,8.17,31.5c30.31,29.05,42.47,72.58,30.44,112-12.74,41.8-50.4,71.87-94.28,77A31.39,31.39,0,0,0,.06,284.23L0,286a31.45,31.45,0,0,0,34.87,32.17c67.34-7.59,127-54.43,147.4-123.4a173.93,173.93,0,0,0-47-175.25A31.47,31.47,0,0,0,83.43,33.37Z"/>
+        <rect data-fill="#5070ff" x="238.65" width="61.28" height="318.96" rx="29.74"/>
+        <path data-fill="#ffde6a" d="M562.49,120.42a153.67,153.67,0,0,0-43.24-72.67A170.41,170.41,0,0,0,442.14,6,192.72,192.72,0,0,0,396.57.47c-5.39,0-10.84.24-16.18.71a35.71,35.71,0,0,0-22.47,10.46,31.13,31.13,0,0,0-9.07,21.82V34c0,13.64,12,24.74,26.77,24.74a29.8,29.8,0,0,0,4.21-.3,118.22,118.22,0,0,1,16.74-1.19c1.5,0,3,0,4.53.09,57,2.14,103.27,45.39,105.39,98.46,1.12,28.07-9.79,54.67-30.73,74.91s-49.08,31.41-79.19,31.41a117.74,117.74,0,0,1-19.79-1.67,26.88,26.88,0,0,0-4.38-.37,24.47,24.47,0,0,0-16.54,6.26,20.78,20.78,0,0,0-7,15.51c0,19.38,16.13,35.53,36.72,36.75,3.64.22,7.34.33,11,.33a179.38,179.38,0,0,0,75.86-16.54A171.29,171.29,0,0,0,531,258.09a155.47,155.47,0,0,0,32.37-63A151.65,151.65,0,0,0,562.49,120.42Z"/>
+        <rect data-fill="#5070ff" x="604.49" width="61.28" height="318.96" rx="29.74"/>
+        <path data-fill="#fd8256" d="M794.06,33.37h0a31.32,31.32,0,0,0,8.18,31.5c30.31,29.05,42.46,72.58,30.43,112-12.73,41.8-50.4,71.87-94.27,77a31.41,31.41,0,0,0-27.71,30.36l0,1.74a31.44,31.44,0,0,0,34.86,32.17c67.34-7.59,127-54.43,147.4-123.4a173.9,173.9,0,0,0-47-175.25A31.47,31.47,0,0,0,794.06,33.37Z"/>
+      </svg>
     </div>
     <script>
       (function () {
@@ -229,6 +100,34 @@
           "aria-label",
           document.documentElement.lang === "en" ? "Loading Radar" : "جاري تحميل رادار",
         );
+        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var letters = Array.prototype.slice.call(
+          loader.querySelectorAll(".loader-mark path, .loader-mark rect"),
+        ).reverse();
+        var ease = "0.45s cubic-bezier(0.22, 1, 0.36, 1)";
+        letters.forEach(function (letter, index) {
+          var color = letter.getAttribute("data-fill");
+          var length = letter.getTotalLength();
+          letter.style.stroke = color;
+          letter.style.strokeDasharray = String(length);
+          letter.style.strokeDashoffset = String(length);
+          letter.style.fill = "transparent";
+          if (reduced) {
+            letter.style.strokeDashoffset = "0";
+            letter.style.fill = color;
+            letter.style.stroke = "none";
+            return;
+          }
+          window.setTimeout(function () {
+            letter.style.transition = "stroke-dashoffset " + ease;
+            letter.style.strokeDashoffset = "0";
+          }, 180 + index * 240);
+          window.setTimeout(function () {
+            letter.style.transition = "fill 0.28s ease, stroke-width 0.28s ease";
+            letter.style.fill = color;
+            letter.style.strokeWidth = "0";
+          }, 180 + index * 240 + 400);
+        });
       })();
     </script>
     <div id="root"></div>

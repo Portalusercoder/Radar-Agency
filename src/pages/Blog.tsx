@@ -39,7 +39,7 @@ export function Blog() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t(ui.blog.placeholder)}
-            className="min-h-12 flex-1 rounded-full border border-line bg-paper px-5 text-night placeholder:text-muted"
+            className="field min-h-12 flex-1 rounded-full bg-paper px-5 placeholder:text-muted"
           />
         </div>
         <div className="mt-6 flex flex-wrap gap-7">

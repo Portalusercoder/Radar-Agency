@@ -97,7 +97,7 @@ export function LeadModal() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 min-h-11 w-full rounded-full border border-line bg-mist px-4 text-night"
+              className="field mt-1 min-h-11 w-full rounded-full px-4"
             />
 
             <label className="mt-4 block text-sm text-muted" htmlFor="lead-service">
@@ -107,7 +107,7 @@ export function LeadModal() {
               id="lead-service"
               value={service}
               onChange={(e) => setService(e.target.value)}
-              className="mt-1 min-h-11 w-full rounded-full border border-line bg-mist px-4 text-night"
+              className="field mt-1 min-h-11 w-full rounded-full px-4"
             >
               {SERVICE_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -119,7 +119,7 @@ export function LeadModal() {
             <label className="mt-4 block text-sm text-muted" htmlFor="lead-phone">
               {t(ui.lead.phone)}
             </label>
-            <div className="mt-1 flex rounded-full border border-line bg-mist">
+            <div className="field mt-1 flex rounded-full">
               <span className="flex min-h-11 items-center px-3 text-sm text-muted" dir="ltr">
                 +966
               </span>
@@ -154,7 +154,7 @@ export function LeadModal() {
               </button>
               <a
                 href={`${SITE.whatsapp}?text=${encodeURIComponent(t(ui.waStart))}`}
-                className="text-sm text-night no-underline"
+                className="text-sm text-ink no-underline"
               >
                 {t(ui.whatsapp)}
               </a>

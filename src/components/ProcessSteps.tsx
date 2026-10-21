@@ -18,10 +18,10 @@ export function ProcessSteps() {
 
   return (
     <div className="process">
+      <p className="kicker">{t(ui.home.processKicker)}</p>
       <div className="process-head">
         <h2 className="display process-title">
-          {t(ui.home.processKicker)}
-          <span> ({t(ui.home.processAside)})</span>
+          {t(ui.home.processAside)}
         </h2>
         <div className="process-arrows">
           <button

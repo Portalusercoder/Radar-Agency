@@ -112,6 +112,7 @@ export function ServicesStack() {
             </article>
           );
         })}
+        <div className="svc-stack__runway" aria-hidden="true" />
       </div>
     </section>
   );

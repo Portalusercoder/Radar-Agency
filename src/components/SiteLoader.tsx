@@ -35,8 +35,8 @@ function bootLoader() {
   if (app) app.setAttribute("inert", "");
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const min = reduced ? 450 : 2200;
-  const max = reduced ? 900 : 3800;
+  const min = reduced ? 450 : 2600;
+  const max = reduced ? 900 : 4000;
   const started = performance.now();
   let leaving = false;
 

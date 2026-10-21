@@ -1,3 +1,4 @@
+import { useEffect, useRef, type RefObject } from "react";
 import { Link } from "react-router-dom";
 import { ProcessSteps } from "../components/ProcessSteps";
 import { ProofSlider } from "../components/ProofSlider";
@@ -6,7 +7,7 @@ import { ServicesStack } from "../components/ServicesStack";
 import { StatCards } from "../components/StatCards";
 import { WorkCarousel } from "../components/WorkCarousel";
 import { ui } from "../copy";
-import { POSTS, SERVICES, SITE } from "../data";
+import { POSTS, SERVICES } from "../data";
 import { useI18n } from "../i18n";
 import { useLead } from "../lead";
 
@@ -27,68 +28,95 @@ function Marked({ text, marks }: { text: string; marks: string[] }) {
   );
 }
 
+function useOrbTilt(ref: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduce || !fine) return;
+
+    const onMove = (event: PointerEvent) => {
+      const box = node.getBoundingClientRect();
+      const nx = (event.clientX - box.left) / box.width - 0.5;
+      const ny = (event.clientY - box.top) / box.height - 0.5;
+      node.style.setProperty("--orb-x", `${nx * 48}px`);
+      node.style.setProperty("--orb-y", `${ny * 36}px`);
+    };
+
+    const onLeave = () => {
+      node.style.setProperty("--orb-x", "0px");
+      node.style.setProperty("--orb-y", "0px");
+    };
+
+    node.addEventListener("pointermove", onMove);
+    node.addEventListener("pointerleave", onLeave);
+    return () => {
+      node.removeEventListener("pointermove", onMove);
+      node.removeEventListener("pointerleave", onLeave);
+    };
+  }, [ref]);
+}
+
 export function Home() {
   const { openLead } = useLead();
   const { t, isAr } = useI18n();
+  const hero = useRef<HTMLElement>(null);
   const lines = isAr ? ui.home.h1Lines.ar : ui.home.h1Lines.en;
+  const oval = t(ui.nav.start).trim().split(/\s+/);
+  useOrbTilt(hero);
 
   return (
     <main className="relative z-[1]">
-      <section id="home-hero" className="hero">
-        <div className="hero__grid" aria-hidden />
-        <div className="hero__burst" aria-hidden />
-        <p className="hero__mega" aria-hidden>
-          {t(ui.brand)}
-        </p>
-        <div className="hero__inner">
-          <h1 className="display max-w-[22rem] text-[clamp(1.7rem,3.8vw,3.15rem)] leading-[1.2] md:max-w-[28rem]">
-            <span className="hero-line">
-              {lines[0].split(/\s+/).map((word, index) => (
-                <span key={`${word}-${index}`} className="hero-word">
-                  <span style={{ animationDelay: `${160 + index * 60}ms` }}>{word}</span>
-                </span>
-              ))}
-            </span>
-            <span className="hero-line mt-1">
-              {lines[1].split(/\s+/).map((word, index) => (
-                <span key={`${word}-${index}`} className="hero-word">
-                  <span style={{ animationDelay: `${380 + index * 60}ms` }}>{word}</span>
-                </span>
-              ))}
-            </span>
+      <section id="home-hero" ref={hero} className="hero">
+        <div className="hero__orb" aria-hidden />
+        <div className="hero__frame">
+          <h1 className="hero-copy">
+            {lines.map((line, lineIndex) => (
+              <span key={line} className="hero-line">
+                {line.split(/\s+/).map((word, index) => (
+                  <span key={`${lineIndex}-${word}-${index}`} className="hero-word">
+                    <span style={{ animationDelay: `${140 + lineIndex * 160 + index * 50}ms` }}>{word}</span>
+                  </span>
+                ))}
+              </span>
+            ))}
           </h1>
-          <button
-            type="button"
-            onClick={() => openLead()}
-            className="btn-pill btn-hero hero-rise mt-8 min-h-12"
-            style={{ animationDelay: "720ms" }}
-          >
-            {t(ui.home.joinCta)}
-            <span aria-hidden className="ms-2 rtl:rotate-180">
-              →
-            </span>
-          </button>
+          <div className="hero__mid">
+            <button type="button" onClick={() => openLead()} className="hero-oval">
+              <span className="hero-oval__rings" aria-hidden />
+              <span className="hero-oval__label">
+                {oval[0]}
+                {oval.length > 1 ? (
+                  <>
+                    <br />
+                    {oval.slice(1).join(" ")}
+                  </>
+                ) : null}
+              </span>
+            </button>
+            <Link to="/#about" className="hero-who">
+              {t(ui.home.aboutKicker)}
+              <span className="hero-who__line" aria-hidden />
+              <span aria-hidden className="rtl:rotate-180">
+                →
+              </span>
+            </Link>
+          </div>
+          <div className="hero__foot">
+            <p>{t(ui.home.trustLine)}</p>
+            <p>{t(ui.home.doLead)}</p>
+          </div>
         </div>
-        <nav className="hero-social" aria-label={t(ui.nav.social)}>
-          <a href={SITE.instagram} rel="noreferrer">
-            {t(ui.footer.instagram)}
-          </a>
-          <a href={SITE.twitter} rel="noreferrer">
-            {t(ui.footer.x)}
-          </a>
-          <a href={SITE.linkedin} rel="noreferrer">
-            {t(ui.footer.linkedin)}
-          </a>
-        </nav>
       </section>
 
       <section id="from-idea" className="idea section">
         <div className="wrap">
           <Reveal>
+            <p className="kicker">{t(ui.home.featuredKicker)}</p>
             <div className="idea-head">
               <h2 className="display max-w-xl text-[clamp(1.85rem,4.2vw,3.35rem)] leading-[1.15]">
-                <span className="block">{t(ui.home.featuredKicker)}.</span>
-                <span className="block">{t(ui.home.featuredTitle)}</span>
+                {t(ui.home.featuredTitle)}
               </h2>
               <button type="button" onClick={() => openLead()} className="idea-contact">
                 {t(ui.home.featuredContact)}
@@ -216,7 +244,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section proof">
         <div className="wrap">
           <Reveal>
             <p className="kicker">{t(ui.home.resultsKicker)}</p>
@@ -232,6 +260,7 @@ export function Home() {
       <section id="journal" className="journal section">
         <div className="wrap">
           <Reveal>
+            <p className="kicker">{t(ui.home.journalKicker)}</p>
             <h2 className="journal-title">{t(ui.home.journalIndex)}</h2>
           </Reveal>
           <div className="journal-list">

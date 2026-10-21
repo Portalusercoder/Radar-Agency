@@ -37,8 +37,8 @@ export const ui = {
       en: "Your customers are looking for you… Make sure they find you first.",
     },
     h1Lines: {
-      ar: ["عملاؤك يبحثون عنك…", "تأكد أنهم يجدونك أولًا."],
-      en: ["Your customers are looking for you…", "Make sure they find you first."],
+      ar: ["عملاؤك", "يبحثون عنك.", "تأكد أنهم يجدونك أولًا."],
+      en: ["Your customers", "are looking for you.", "Find you first."],
     },
     lead: {
       ar: "نساعدك توصل لجمهورك المستهدف، تقوّي ظهور علامتك، وتحوّل زيارات الموقع والحملات إلى فرص بيع حقيقية عبر استراتيجيات ذكية مبنية على البيانات.",

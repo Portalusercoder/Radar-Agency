@@ -63,7 +63,7 @@ export function Service() {
       <section className="section bg-paper pt-0">
         <div className="wrap grid gap-12 md:grid-cols-2">
           <div>
-            <Kicker>{t(ui.service.why)}</Kicker>
+            <Kicker tone="ink">{t(ui.service.why)}</Kicker>
             <p className="mt-4 text-lg leading-8 text-muted">{t(service.why)}</p>
           </div>
           <div className="grid gap-6">
@@ -80,7 +80,7 @@ export function Service() {
       </section>
 
       <div className="wrap pb-16">
-        <Link to="/" className="text-muted no-underline hover:text-night">
+        <Link to="/" className="text-muted no-underline hover:text-ink">
           ← {t(ui.service.back)}
         </Link>
       </div>

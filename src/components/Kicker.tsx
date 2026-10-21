@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 
 export function Kicker({
   children,
-  light = false,
+  tone,
 }: {
   children: ReactNode;
-  light?: boolean;
+  tone?: "corn" | "ink" | "accent";
 }) {
-  return <p className={`kicker ${light ? "text-paper/70" : ""}`}>{children}</p>;
+  return <p className={`kicker${tone ? ` kicker--${tone}` : ""}`}>{children}</p>;
 }

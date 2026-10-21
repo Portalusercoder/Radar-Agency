@@ -62,7 +62,7 @@ export function StatCards() {
 
   return (
     <div className="impact">
-      <p className="impact-pill">{t(ui.home.numbersKicker)}</p>
+      <p className="kicker">{t(ui.home.numbersKicker)}</p>
       <h2 className="sr-only">{t(ui.home.numbersTitle)}</h2>
       <div className="impact-grid">
         {ui.numbers.map((item) => (

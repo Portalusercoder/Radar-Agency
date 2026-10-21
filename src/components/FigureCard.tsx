@@ -26,7 +26,7 @@ export function FigureCard({
           </span>
         ) : null}
       </div>
-      {tag ? <p className="kicker mt-4">{tag}</p> : null}
+      {tag ? <p className="tag mt-4">{tag}</p> : null}
       <h3 className={`${tag ? "mt-2" : "mt-4"} text-[1.05rem] font-semibold leading-snug`}>{title}</h3>
       {text ? <p className="mt-2 line-clamp-2 text-[0.82rem] leading-6 text-muted">{text}</p> : null}
       {meta ? <p className="mt-2 text-[0.72rem] text-muted">{meta}</p> : null}

@@ -46,7 +46,7 @@ export function Portfolio() {
           {items.length === 0 ? (
             <p className="py-12 text-muted">
               {t(ui.work.empty)}{" "}
-              <button type="button" onClick={() => openLead()} className="text-night underline">
+              <button type="button" onClick={() => openLead()} className="text-ink underline">
                 {t(ui.work.emptyCta)}
               </button>
             </p>
