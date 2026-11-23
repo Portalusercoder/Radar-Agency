@@ -32,6 +32,10 @@ export const ui = {
   },
   home: {
     heroKicker: { ar: "وكالة تسويق رقمية من الرياض", en: "Digital marketing from Riyadh" },
+    heroPartner: {
+      ar: ["شريك إبداعي متكامل", "للعلامات اللي تفكّر", "قدام"],
+      en: ["Full Service Creative", "partner for forward", "thinking brands"],
+    },
     h1: {
       ar: "عملاؤك يبحثون عنك… تأكد أنهم يجدونك أولًا.",
       en: "Your customers are looking for you… Make sure they find you first.",
@@ -50,7 +54,32 @@ export const ui = {
       ar: "نشغّل الحملات على المنصات اللي السوق يفتحها.",
       en: "We run campaigns on the apps this market actually opens.",
     },
+    scroll: { ar: "مرّر", en: "Scroll" },
+    heroCutout: {
+      ar: ["عملاؤك", "يبحثون", "عنك."],
+      en: ["your clients", "are looking", "for you."],
+    },
+    heroSignQ: {
+      ar: "هل الناس يتجاهلون علامتك التجارية؟",
+      en: "Are people ignoring your brand?",
+    },
+    heroSignA: {
+      ar: "يمكننا حل ذلك.",
+      en: "We can fix that.",
+    },
     learnMore: { ar: "اعرف أكثر", en: "Learn More" },
+    helpTitle: {
+      ar: "كيف نقدر نخدم منشأتك؟",
+      en: "How can we help your business",
+    },
+    helpBody1: {
+      ar: "ندعوك لجلسة استشارة نقرأ فيها سوقك، قنواتك، ومتجرك على سلة أو زد. نحدد وين يضيع الطلب، وأي منصة تستحق الميزانية أولًا، وكيف نربط الإعلان بنتيجة تُقاس بالريال.",
+      en: "We invite you to a consultation where we read your market, channels, and Salla or Zid store. We find where demand leaks, which platform deserves budget first, and how to tie every ad to a result measured in riyals.",
+    },
+    helpBody2: {
+      ar: "فريق رادار يشتغل بلهجة السوق وتقرير يفهمه صاحب المنشأة. تطلع من الجلسة بخطة واضحة: قناة، رسالة، وقياس — مو وعود عامة.",
+      en: "Radar works in the market’s voice, with a report the business owner can read. You leave with a clear plan: channel, message, and measurement — not vague promises.",
+    },
     requestService: { ar: "اطلب هذه الخدمة", en: "Request This Service" },
     ticker: [
       { ar: "سناب شات", en: "Snapchat" },
@@ -87,10 +116,52 @@ export const ui = {
     workBand: { ar: "شوف كيف نحوّل الفكرة إلى طلب.", en: "See how we turn ideas into orders." },
     workKicker: { ar: "أعمال تحمل بصمتنا", en: "Work that carries our mark" },
     workTitle: { ar: "حكايات صاغتها رادار.", en: "Stories shaped by Radar." },
+    workMeta: { ar: "٠١ // أعمال", en: "01 // work" },
+    workView: { ar: "عرض", en: "View" },
+    workGear: { ar: "شوف كل الأعمال", en: "Check out our work" },
+    workLine1: { ar: "أحدث", en: "Latest" },
+    workLine2: { ar: "أعمالنا", en: "and Work" },
+    workCasesTitle: { ar: "أحدث أعمالنا.", en: "our latest cases." },
+    workSeeAll: { ar: "كل الأعمال", en: "see all cases" },
     workAll: { ar: "استكشف كل الأعمال", en: "Explore all work" },
     prevWork: { ar: "الأعمال السابقة", en: "Previous work" },
     nextWork: { ar: "الأعمال التالية", en: "Next work" },
     servicesWord: { ar: "الخدمات", en: "Services" },
+    servicesOffer: { ar: "عروض", en: "Offer" },
+    servicesMeta: { ar: "٠١ // خدمات", en: "01 // services" },
+    servicesMore: { ar: "شوف كل الخدمات", en: "See all services" },
+    servicesLess: { ar: "عرض أقل", en: "Show less" },
+    servicesKicker: { ar: "خدماتنا.", en: "Our Service." },
+    servicesTitle: {
+      ar: "خدمات شاملة مصممة لاحتياج منشأتك",
+      en: "Comprehensive services tailored to your needs",
+    },
+    servicesLead: {
+      ar: "أربع خدمات أساسية نشتغلها للمنشأة السعودية: منصات، هوية، متجر، وإعلان.",
+      en: "Four core services for Saudi businesses: social, branding, store design, and media buying.",
+    },
+    handledBy: { ar: "يشرف عليها", en: "Handled by" },
+    getQuote: { ar: "اطلب عرض سعر", en: "Get a Quote" },
+    svcSocialTitle: { ar: "إدارة المنصات", en: "Social media" },
+    svcSocialText: {
+      ar: "سناب وتيك توك وانستقرام بخطة شهرية ولهجة محلية — الحساب يتكلم بصوت مشروعك.",
+      en: "Snapchat, TikTok, and Instagram with a monthly plan and local voice — the account sounds like your business.",
+    },
+    svcBrandTitle: { ar: "الهوية والعلامة", en: "Branding" },
+    svcBrandText: {
+      ar: "هوية وتصاميم تخدم البيع: شعار، ألوان، وقوالب إعلان يستخدمها فريقك كل أسبوع.",
+      en: "Identity and design that sell: mark, colors, and ad templates your team uses every week.",
+    },
+    svcStoreTitle: { ar: "تصميم المتاجر", en: "Store designs" },
+    svcStoreText: {
+      ar: "بناء وتحسين متاجر سلة وزد: تجربة شراء قصيرة، سرعة، وربط للإعلان قبل الإطلاق.",
+      en: "Build and refine Salla and Zid stores: short checkout, speed, and ad tracking before launch.",
+    },
+    svcAdsTitle: { ar: "شراء الإعلانات", en: "Media buying" },
+    svcAdsText: {
+      ar: "نصرف الميزانية على المنصات اللي السوق يفتحها، ونقيس بالريال لا بالانطباعات.",
+      en: "We put budget on the apps this market opens, and we measure in riyals — not impressions.",
+    },
     expectTitle: { ar: "لنبنِ حضورًا يُقاس بالطلب.", en: "Let’s build presence measured by orders." },
     philosophyKicker: { ar: "رادار؟", en: "Radar?" },
     philosophyTitle: {
@@ -144,10 +215,10 @@ export const ui = {
     },
     packsBannerCta: { ar: "عرض الباقات", en: "View packages" },
     requestPack: { ar: "اطلب الباقة", en: "Request this plan" },
-    servicesKicker: { ar: "خدمات رادار", en: "Radar services" },
-    servicesTitle: {
-      ar: "لا نقدّم قناة واحدة. نصنع حضورًا يُطلب.",
-      en: "We don’t sell one channel. We build presence people can find.",
+    faqTitle: { ar: "أسئلة تتكرر", en: "Frequently Asked Questions" },
+    faqLead: {
+      ar: "إجابات مختصرة على أكثر الأسئلة اللي توصلنا قبل ما نبدأ.",
+      en: "Short answers to the questions we hear most before a project starts.",
     },
     resultsKicker: { ar: "نتائج نقدر نتكلم عنها", en: "Results we can stand behind" },
     resultsTitle: { ar: "من السوق، مو من قالب تقييم.", en: "From the market — not a review template." },
@@ -168,6 +239,9 @@ export const ui = {
     journalKicker: { ar: "المدونة", en: "Journal" },
     journalTitle: { ar: "ملاحظات من تشغيل الحملات", en: "Notes from running campaigns" },
     journalIndex: { ar: "المدونة / المقالات", en: "Journal / Articles" },
+    journalMeta: { ar: "٠١٠ // مقالات", en: "010 // articles" },
+    journalArticles: { ar: "مقالات", en: "Articles" },
+    journalCases: { ar: "دراسات", en: "Cases" },
     allPosts: { ar: "كل المقالات", en: "All articles" },
     readMore: { ar: "اقرأ المزيد", en: "Read More" },
   },

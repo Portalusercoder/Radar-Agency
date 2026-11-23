@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { ui } from "../copy";
 import { useI18n } from "../i18n";
 
+const FEATURED = ui.numbers.slice(0, 3);
+
 function useInView<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [inView, setInView] = useState(false);
@@ -62,15 +64,14 @@ export function StatCards() {
 
   return (
     <div className="impact">
-      <p className="kicker">{t(ui.home.numbersKicker)}</p>
       <h2 className="sr-only">{t(ui.home.numbersTitle)}</h2>
       <div className="impact-grid">
-        {ui.numbers.map((item) => (
+        {FEATURED.map((item) => (
           <article key={item.label.en} className="impact-item">
-            <p className="impact-label">{t(item.label)}</p>
             <p className="impact-value">
               <CountUp to={item.to} suffix={item.suffix} />
             </p>
+            <p className="impact-label">{t(item.label)}</p>
           </article>
         ))}
       </div>

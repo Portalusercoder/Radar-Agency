@@ -4,9 +4,10 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { LeadModal } from "./LeadModal";
 import { SmokeFX } from "./SmokeFX";
+import { SmoothScroll } from "./SmoothScroll";
 import { WhatsApp } from "./WhatsApp";
 
-const MAGNETIC = ".btn-pill, .lang-orb, .arrow-btn, .orb-btn, .wa-orb, .nav-tool, .nav-start, .process-arrow";
+const MAGNETIC = ".btn-pill, .lang-orb, .arrow-btn, .orb-btn, .wa-orb, .nav-tool, .nav-orb, .process-arrow";
 
 function useMagnetic() {
   useEffect(() => {
@@ -41,13 +42,15 @@ export function Layout() {
   useMagnetic();
 
   return (
-    <div className="relative min-h-screen bg-paper text-night">
-      <SmokeFX />
-      <Header />
-      <Outlet />
-      <Footer />
-      <WhatsApp />
-      <LeadModal />
-    </div>
+    <SmoothScroll>
+      <div className="relative min-h-screen bg-paper text-night">
+        <SmokeFX />
+        <Header />
+        <Outlet />
+        <Footer />
+        <WhatsApp />
+        <LeadModal />
+      </div>
+    </SmoothScroll>
   );
 }

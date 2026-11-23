@@ -12,7 +12,7 @@ export function Footer() {
   return (
     <footer className="foot">
       <div className="foot-scene">
-        <img src="/media/portrait.jpg" alt="" />
+        <img src="/media/footer-billboard.jpg" alt="" />
         <div className="wrap">
           <div className="foot-card">
             <div className="foot-top">
@@ -31,7 +31,7 @@ export function Footer() {
                   <Link to="/#services">{t(ui.nav.services)}</Link>
                   <Link to="/portfolio">{t(ui.nav.work)}</Link>
                   <Link to="/packages">{t(ui.nav.packages)}</Link>
-                  <Link to="/#about">{t(ui.home.aboutKicker)}</Link>
+                  <Link to="/#who-we-are">{t(ui.home.aboutKicker)}</Link>
                   <button type="button" onClick={() => openLead()}>
                     {t(ui.footer.contact)}
                   </button>

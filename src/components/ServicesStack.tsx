@@ -67,7 +67,7 @@ export function ServicesStack() {
   return (
     <section
       ref={pin}
-      id="services"
+      id="services-list"
       className={`svc-stack ${reduce ? "is-static" : ""}`}
       style={{ ["--n" as string]: String(total) }}
     >

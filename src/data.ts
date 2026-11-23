@@ -321,6 +321,7 @@ export const PORTFOLIO: {
   category: WorkCategory;
   title: Text;
   city: Text;
+  date: Text;
   text: Text;
   img: string;
   to?: string;
@@ -330,6 +331,7 @@ export const PORTFOLIO: {
     category: "stores",
     title: { ar: "لدن للعود", en: "Laduun Oud" },
     city: { ar: "السعودية", en: "Saudi Arabia" },
+    date: { ar: "فبراير 2024", en: "Feb, 2024" },
     img: "/media/store.jpg",
     to: "/blog/case-laduun",
     text: {
@@ -342,6 +344,7 @@ export const PORTFOLIO: {
     category: "stores",
     title: { ar: "متاجر سلة", en: "Salla stores" },
     city: { ar: "الرياض وجدة", en: "Riyadh and Jeddah" },
+    date: { ar: "نوفمبر 2025", en: "Nov, 2025" },
     img: "/media/bags.jpg",
     to: "/services/online-stores",
     text: {
@@ -354,6 +357,7 @@ export const PORTFOLIO: {
     category: "social",
     title: { ar: "حملات سناب شات", en: "Snapchat campaigns" },
     city: { ar: "المملكة", en: "Saudi Arabia" },
+    date: { ar: "أغسطس 2025", en: "Aug, 2025" },
     img: "/media/snap.jpg",
     to: "/services/social-media",
     text: {
@@ -366,6 +370,7 @@ export const PORTFOLIO: {
     category: "identity",
     title: { ar: "هويات تجارية", en: "Brand identities" },
     city: { ar: "السعودية", en: "Saudi Arabia" },
+    date: { ar: "يونيو 2025", en: "Jun, 2025" },
     img: "/media/pack.jpg",
     to: "/services/graphic-design",
     text: {
@@ -378,6 +383,7 @@ export const PORTFOLIO: {
     category: "social",
     title: { ar: "حملات تيك توك", en: "TikTok campaigns" },
     city: { ar: "السعودية", en: "Saudi Arabia" },
+    date: { ar: "مارس 2025", en: "Mar, 2025" },
     img: "/media/phone.jpg",
     to: "/services/advertisement",
     text: {
@@ -390,6 +396,7 @@ export const PORTFOLIO: {
     category: "identity",
     title: { ar: "حضور من الرياض", en: "Presence from Riyadh" },
     city: { ar: "الرياض", en: "Riyadh" },
+    date: { ar: "يناير 2025", en: "Jan, 2025" },
     img: "/media/city.jpg",
     to: "/portfolio",
     text: {

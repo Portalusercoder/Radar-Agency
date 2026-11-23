@@ -32,25 +32,43 @@ export function Header() {
   }, [menu]);
 
   return (
-    <header className="nav-float">
-      <div className={`nav-pill ${scrolled ? "is-scrolled" : ""}`}>
+    <header className={`nav-bar${scrolled ? " is-scrolled" : ""}`}>
+      <div className="nav-bar__inner">
         <Logo />
 
-        <div className="nav-pill__tools">
+        <nav className="nav-bar__links" aria-label={t(ui.nav.main)}>
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to} className="nav-bar__link">
+              {t(link.label)}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="nav-bar__tools">
           <a href={SITE.dashboard} className="nav-tool" aria-label={t(ui.nav.login)}>
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden>
               <circle cx="12" cy="8" r="3.2" stroke="currentColor" strokeWidth="1.6" />
-              <path d="M5.5 19.2c1.4-3 3.7-4.5 6.5-4.5s5.1 1.5 6.5 4.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              <path
+                d="M5.5 19.2c1.4-3 3.7-4.5 6.5-4.5s5.1 1.5 6.5 4.5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
             </svg>
           </a>
           <button type="button" onClick={toggleLocale} className="nav-tool" aria-label={t(ui.langLabel)}>
             {isAr ? "EN" : "ع"}
           </button>
-          <button type="button" onClick={() => openLead()} className="nav-start">
-            {t(ui.nav.start)}
-            <span aria-hidden className="ms-1 rtl:rotate-180">
-              →
-            </span>
+          <button type="button" onClick={() => openLead()} className="nav-orb" aria-label={t(ui.nav.start)}>
+            <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden fill="none">
+              <path
+                d="M4 12 12 4M6.5 4H12v5.5"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
           <button
             type="button"

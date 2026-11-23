@@ -1,0 +1,206 @@
+.wwa {
+  --brand: #5070ff;
+  --brand-dark: #14161c;
+  --wwa-page: #ffffff;
+  --wwa-text: #ffffff;
+  --wwa-muted: rgb(255 255 255 / 0.55);
+  position: relative;
+  color: var(--wwa-text);
+  background: var(--wwa-page);
+}
+
+.wwa-stage {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.wwa-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--wwa-page);
+  will-change: background-color;
+}
+
+.wwa-title,
+.wwa-hint,
+.wwa-block,
+.wwa-quote {
+  position: absolute;
+  z-index: 2;
+  will-change: transform, opacity, filter;
+}
+
+.wwa-title {
+  inset-inline: var(--page-x);
+  top: 50%;
+  translate: 0 -50%;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 11vw, 12rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+html[dir="rtl"] .wwa-title {
+  letter-spacing: 0;
+}
+
+.wwa-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.wwa-line {
+  display: block;
+  will-change: transform, opacity, filter;
+}
+
+.wwa-hint {
+  inset-inline: 0;
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  margin: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.72);
+}
+
+html[dir="rtl"] .wwa-hint {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.wwa-hint__bob {
+  display: grid;
+  justify-items: center;
+  gap: 0.55rem;
+  will-change: transform;
+}
+
+.wwa-hint__line {
+  width: 1px;
+  height: 2.4rem;
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0.7), transparent);
+}
+
+.wwa-block {
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1.25rem;
+  padding-inline: var(--page-x);
+  text-align: center;
+}
+
+.wwa-label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.7);
+}
+
+html[dir="rtl"] .wwa-label {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.wwa-copy {
+  margin: 0;
+  max-width: 38rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+}
+
+html[dir="rtl"] .wwa-copy {
+  letter-spacing: 0;
+}
+
+.wwa-word {
+  display: inline-block;
+  white-space: pre;
+  will-change: opacity;
+}
+
+.wwa-quote {
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1.35rem;
+  padding-inline: var(--page-x);
+  margin: 0;
+  text-align: center;
+  font-style: normal;
+}
+
+.wwa-quote__line {
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+html[dir="rtl"] .wwa-quote__line {
+  max-width: 16ch;
+  letter-spacing: 0;
+}
+
+.wwa-cite {
+  font-size: 0.92rem;
+  font-weight: 500;
+  font-style: normal;
+  color: var(--wwa-muted);
+  will-change: transform, opacity;
+}
+
+/* Reduced motion: static stacked layout */
+.wwa--static .wwa-stage {
+  height: auto;
+  display: grid;
+  gap: 3.5rem;
+  padding: var(--section-y) var(--page-x);
+}
+
+.wwa--static .wwa-bg {
+  background: var(--brand-dark);
+}
+
+.wwa--static .wwa-title,
+.wwa--static .wwa-hint,
+.wwa--static .wwa-block,
+.wwa--static .wwa-quote {
+  position: relative;
+  inset: auto;
+  translate: none;
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.wwa--static .wwa-hint {
+  display: none;
+}
+
+.wwa--static .wwa-line,
+.wwa--static .wwa-word,
+.wwa--static .wwa-label,
+.wwa--static .wwa-cite {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}

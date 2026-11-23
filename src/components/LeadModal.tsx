@@ -59,7 +59,7 @@ export function LeadModal() {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/55 backdrop-blur-2xl"
         aria-label={t(ui.lead.close)}
         onClick={closeLead}
       />
