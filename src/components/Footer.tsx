@@ -12,7 +12,6 @@ export function Footer() {
   return (
     <footer className="foot">
       <div className="foot-scene">
-        <img src="/media/footer-billboard.jpg" alt="" />
         <div className="wrap">
           <div className="foot-card">
             <div className="foot-top">

@@ -107,6 +107,7 @@ export const ui = {
     ourStory: { ar: "طريقة رادار", en: "Our method" },
     processKicker: { ar: "كيف نشتغل", en: "Our process" },
     processAside: { ar: "خطوة بخطوة", en: "Step-by-step" },
+    processMeta: { ar: "٠٢ // آلية العمل", en: "02 // process" },
     processPrev: { ar: "الخطوة السابقة", en: "Previous step" },
     processNext: { ar: "الخطوة التالية", en: "Next step" },
     ctaBand: { ar: "خلّنا نلاقي القناة اللي تبيع.", en: "Let’s find the channel that sells." },

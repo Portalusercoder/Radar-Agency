@@ -7,26 +7,36 @@ const SERVICES: {
   slug: string;
   title: Text;
   meta: Text;
+  text: Text;
+  image: string;
 }[] = [
   {
     slug: "social-media",
     title: ui.home.svcSocialTitle,
     meta: { ar: "منصات", en: "Platforms" },
+    text: ui.home.svcSocialText,
+    image: "/media/snap.jpg",
   },
   {
     slug: "graphic-design",
     title: ui.home.svcBrandTitle,
     meta: { ar: "هوية", en: "Identity" },
+    text: ui.home.svcBrandText,
+    image: "/media/bags.jpg",
   },
   {
     slug: "online-stores",
     title: ui.home.svcStoreTitle,
     meta: { ar: "متاجر", en: "Commerce" },
+    text: ui.home.svcStoreText,
+    image: "/media/store.jpg",
   },
   {
     slug: "advertisement",
     title: ui.home.svcAdsTitle,
     meta: { ar: "إعلان", en: "Paid media" },
+    text: ui.home.svcAdsText,
+    image: "/media/poster.jpg",
   },
 ];
 
@@ -65,11 +75,18 @@ export function ServicesAccordion() {
             <ul className="journal-group__list">
               {SERVICES.map((item) => (
                 <li key={item.slug}>
-                  <Link to={`/services/${item.slug}`} className="journal-link">
+                  <Link
+                    to={`/services/${item.slug}`}
+                    className="journal-link journal-link--rich"
+                    style={{ ["--svc-img" as string]: `url(${item.image})` }}
+                  >
                     <span className="journal-link__title">{t(item.title)}</span>
                     <span className="journal-link__meta">{t(item.meta)}</span>
                     <span className="journal-link__arrow" aria-hidden>
                       {isAr ? "←" : "→"}
+                    </span>
+                    <span className="journal-link__desc">
+                      <span className="journal-link__desc-inner">{t(item.text)}</span>
                     </span>
                   </Link>
                 </li>

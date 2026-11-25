@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks, ui } from "../copy";
 import { SITE } from "../data";
@@ -17,12 +17,38 @@ export function Header() {
     setMenu(false);
   }, [pathname, hash]);
 
+  const [pill, setPill] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 8);
+    lastY.current = window.scrollY;
+    const update = () => {
+      const y = window.scrollY;
+      const hero = document.getElementById("home-hero");
+      const heroEnd = hero ? hero.offsetTop + hero.offsetHeight - 120 : 0;
+
+      setScrolled(y > 8);
+      setPill(y > heroEnd);
+
+      const delta = y - lastY.current;
+      if (y < 80) {
+        setHidden(false);
+      } else if (delta > 6) {
+        setHidden(true);
+      } else if (delta < -6) {
+        setHidden(false);
+      }
+      if (Math.abs(delta) > 6) lastY.current = y;
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = menu ? "hidden" : "";
@@ -32,7 +58,11 @@ export function Header() {
   }, [menu]);
 
   return (
-    <header className={`nav-bar${scrolled ? " is-scrolled" : ""}`}>
+    <header
+      className={`nav-bar${scrolled ? " is-scrolled" : ""}${pill ? " is-pill" : ""}${
+        hidden && !menu ? " is-hidden" : ""
+      }`}
+    >
       <div className="nav-bar__inner">
         <Logo />
 

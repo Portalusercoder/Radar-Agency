@@ -101,6 +101,15 @@ html[dir="rtl"] .wwa-hint {
   text-align: center;
 }
 
+/* Vision sits on coral, so its copy switches to ink */
+.wwa-vision {
+  color: #14161c;
+}
+
+.wwa-vision .wwa-label {
+  color: rgb(20 22 28 / 0.7);
+}
+
 .wwa-label {
   margin: 0;
   font-size: 0.78rem;
@@ -178,6 +187,16 @@ html[dir="rtl"] .wwa-quote__line {
 
 .wwa--static .wwa-bg {
   background: var(--brand-dark);
+}
+
+.wwa--static .wwa-mission {
+  padding: var(--section-y) var(--page-x);
+  background: var(--brand);
+}
+
+.wwa--static .wwa-vision {
+  padding: var(--section-y) var(--page-x);
+  background: #fd8256;
 }
 
 .wwa--static .wwa-title,

@@ -178,6 +178,7 @@ export function WhoWeAre() {
           "vision",
         );
         tl.to(vision, { opacity: 1, y: 0, filter: "blur(0px)", duration: PHASE.toVision * 0.35, ease: "power2.out" }, "vision+=0.12");
+        tl.to(bg, { backgroundColor: "#fd8256", duration: PHASE.toVision * 0.3, ease: "power2.inOut" }, "vision");
         tl.to(visionLabel, { opacity: 1, duration: PHASE.toVision * 0.2, ease: "power2.out" }, "vision+=0.15");
         tl.to(
           visionWordsEls,
