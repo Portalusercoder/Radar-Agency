@@ -12,11 +12,12 @@ export const ui = {
     services: { ar: "خدماتنا", en: "Services" },
     packages: { ar: "الباقات", en: "Packages" },
     work: { ar: "أعمالنا", en: "Work" },
-    blog: { ar: "المدونة", en: "Journal" },
+    blog: { ar: "المدونة", en: "Blogs" },
     login: { ar: "دخول العملاء", en: "Client login" },
     start: { ar: "ابدأ معنا", en: "Start with us" },
     openMenu: { ar: "فتح القائمة", en: "Open menu" },
     closeMenu: { ar: "إغلاق القائمة", en: "Close menu" },
+    explore: { ar: "استكشف", en: "Explore" },
   },
   lang: { ar: "English", en: "العربية" },
   langLabel: { ar: "Switch to English", en: "التبديل إلى العربية" },
@@ -138,12 +139,12 @@ export const ui = {
       en: "Comprehensive services tailored to your needs",
     },
     servicesLead: {
-      ar: "أربع خدمات أساسية نشتغلها للمنشأة السعودية: منصات، هوية، متجر، وإعلان.",
-      en: "Four core services for Saudi businesses: social, branding, store design, and media buying.",
+      ar: "أربع خدمات أساسية نشتغلها للمنشأة السعودية: شراء الإعلانات، تصميم المتاجر، الهوية، وصناعة المحتوى.",
+      en: "Four core services for Saudi businesses: media buying, store design, branding, and content creation.",
     },
     handledBy: { ar: "يشرف عليها", en: "Handled by" },
     getQuote: { ar: "اطلب عرض سعر", en: "Get a Quote" },
-    svcSocialTitle: { ar: "إدارة المنصات", en: "Social media" },
+    svcSocialTitle: { ar: "صناعة المحتوى", en: "Content creation" },
     svcSocialText: {
       ar: "سناب وتيك توك وانستقرام بخطة شهرية ولهجة محلية — الحساب يتكلم بصوت مشروعك.",
       en: "Snapchat, TikTok, and Instagram with a monthly plan and local voice — the account sounds like your business.",
@@ -153,12 +154,12 @@ export const ui = {
       ar: "هوية وتصاميم تخدم البيع: شعار، ألوان، وقوالب إعلان يستخدمها فريقك كل أسبوع.",
       en: "Identity and design that sell: mark, colors, and ad templates your team uses every week.",
     },
-    svcStoreTitle: { ar: "تصميم المتاجر", en: "Store designs" },
+    svcStoreTitle: { ar: "تصميم المتاجر (UI/UX)", en: "Store design (UI/UX)" },
     svcStoreText: {
       ar: "بناء وتحسين متاجر سلة وزد: تجربة شراء قصيرة، سرعة، وربط للإعلان قبل الإطلاق.",
       en: "Build and refine Salla and Zid stores: short checkout, speed, and ad tracking before launch.",
     },
-    svcAdsTitle: { ar: "شراء الإعلانات", en: "Media buying" },
+    svcAdsTitle: { ar: "شراء الإعلانات (إعلانات مدفوعة)", en: "Media buying (paid ads)" },
     svcAdsText: {
       ar: "نصرف الميزانية على المنصات اللي السوق يفتحها، ونقيس بالريال لا بالانطباعات.",
       en: "We put budget on the apps this market opens, and we measure in riyals — not impressions.",
@@ -237,9 +238,9 @@ export const ui = {
       en: "A Saudi oud store that wanted to grow online. We tightened the experience, content, and campaigns. Visits +30% and e-commerce sales +33% in the first period.",
     },
     readCase: { ar: "اقرأ دراسة الحالة", en: "Read the case study" },
-    journalKicker: { ar: "المدونة", en: "Journal" },
+    journalKicker: { ar: "المدونة", en: "Blogs" },
     journalTitle: { ar: "ملاحظات من تشغيل الحملات", en: "Notes from running campaigns" },
-    journalIndex: { ar: "المدونة / المقالات", en: "Journal / Articles" },
+    journalIndex: { ar: "المدونة / المقالات", en: "Blogs / Articles" },
     journalMeta: { ar: "٠١٠ // مقالات", en: "010 // articles" },
     journalArticles: { ar: "مقالات", en: "Articles" },
     journalCases: { ar: "دراسات", en: "Cases" },
@@ -325,12 +326,18 @@ export const ui = {
   },
   service: {
     kicker: { ar: "خدمة", en: "Service" },
+    other: { ar: "خدمات ثانية", en: "Other services" },
     vat: { ar: "+ ضريبة 15٪", en: "+ 15% VAT" },
     book: { ar: "احجز استشارتك", en: "Book a consult" },
     includes: { ar: "وش تشمل الخدمة؟", en: "What’s included?" },
     why: { ar: "ليش رادار؟", en: "Why Radar?" },
     back: { ar: "العودة للرئيسية", en: "Back to home" },
     wa: { ar: "السلام عليكم، أبغى أسأل عن", en: "Hello, I want to ask about" },
+    includesMeta: { ar: "٠١ // ما تشمله", en: "01 // included" },
+    includesLines: { ar: ["وش تشمل", "الخدمة؟"], en: ["What’s", "included"] },
+    whyMeta: { ar: "٠٢ // ليش رادار", en: "02 // why radar" },
+    otherMeta: { ar: "٠٣ // خدمات ثانية", en: "03 // more services" },
+    otherLines: { ar: ["شوف", "الباقي"], en: ["Explore", "the rest"] },
   },
   work: {
     kicker: { ar: "أعمال من السوق السعودي", en: "Work from the Saudi market" },
@@ -346,18 +353,39 @@ export const ui = {
     stores: { ar: "متاجر", en: "Stores" },
     social: { ar: "سوشيال", en: "Social" },
     identity: { ar: "هويات", en: "Identity" },
+    metaTop: { ar: "٠١ // أعمالنا", en: "01 // our work" },
+    titleLines: { ar: ["معرض", "الأعمال"], en: ["Selected", "work"] },
+    ctaMeta: { ar: "٠٢ // مشروعك", en: "02 // your project" },
+    ctaTitle: { ar: "مشروعك الجاي؟", en: "Your brand next?" },
+    ctaText: {
+      ar: "قل لنا وش تبيع ومين عميلك، ونرجع لك بخطة واضحة وسعر قبل ما نبدأ.",
+      en: "Tell us what you sell and who buys it. We come back with a clear plan and a price before we start.",
+    },
   },
   blog: {
-    kicker: { ar: "مدونة رادار", en: "Radar journal" },
+    kicker: { ar: "مدونة رادار", en: "Radar blogs" },
     title: { ar: "ملاحظات من السوق", en: "Notes from the market" },
     search: { ar: "البحث", en: "Search" },
     placeholder: { ar: "ابحث في المقالات…", en: "Search articles…" },
     empty: { ar: "ما لقينا نتيجة. جرّب كلمة ثانية أو امسح البحث.", en: "No results. Try another word or clear the search." },
     all: { ar: "الكل", en: "All" },
-    journal: { ar: "مدونة", en: "Journal" },
+    journal: { ar: "مدونة", en: "Blogs" },
     cases: { ar: "تجارب", en: "Cases" },
     share: { ar: "مشاركة المقال", en: "Share article" },
     more: { ar: "المزيد من رادار", en: "More from Radar" },
+    metaTop: { ar: "٠١ // المدونة", en: "01 // blogs" },
+    titleLines: { ar: ["ملاحظات", "من السوق"], en: ["Notes from", "the market"] },
+    lead: {
+      ar: "تشغيل الحملات، متاجر سلة وزد، ومواسم السوق السعودي. ملاحظات من الميدان، مو نظريات.",
+      en: "Campaigns, Salla and Zid stores, and Saudi seasons. Notes from the field, not theory.",
+    },
+    filter: { ar: "تصفية المقالات", en: "Filter articles" },
+    ctaMeta: { ar: "٠٢ // مشروعك", en: "02 // your project" },
+    ctaTitle: { ar: "جاهز نحدد لك القناة اللي تبيع؟", en: "Ready to find the channel that sells?" },
+    ctaText: {
+      ar: "قل لنا وش تبيع ومين عميلك، ونرجع لك بخطة واضحة وسعر قبل ما نبدأ.",
+      en: "Tell us what you sell and who buys it. We come back with a clear plan and a price before we start.",
+    },
   },
   notFound: {
     title: { ar: "الصفحة مو موجودة", en: "This page is not here" },
@@ -413,8 +441,15 @@ export const ui = {
   },
 };
 
-export const navLinks = [
-  { to: "/#services", label: ui.nav.services },
+export type NavLink = {
+  to: string;
+  label: Text;
+  /** When present, the link renders as a dropdown. */
+  menu?: boolean;
+};
+
+export const navLinks: NavLink[] = [
+  { to: "/#services", label: ui.nav.services, menu: true },
   { to: "/portfolio", label: ui.nav.work },
   { to: "/packages", label: ui.nav.packages },
   { to: "/blog", label: ui.nav.blog },

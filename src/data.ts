@@ -15,15 +15,10 @@ export const SITE = {
 };
 
 export const SERVICE_OPTIONS: { value: string; label: Text }[] = [
-  { value: "ads", label: { ar: "إدارة الإعلانات", en: "Ads management" } },
-  { value: "consult", label: { ar: "استشارة تسويقية واستراتيجية", en: "Marketing consulting and strategy" } },
-  { value: "store", label: { ar: "متجر سلة أو زد", en: "Salla or Zid store" } },
-  { value: "creative", label: { ar: "تصاميم إعلانية", en: "Ad design" } },
-  { value: "social", label: { ar: "إدارة سناب وتيك توك وانستقرام", en: "Snapchat, TikTok, Instagram" } },
-  { value: "influencer", label: { ar: "تسويق بالمؤثرين", en: "Influencer marketing" } },
-  { value: "seo", label: { ar: "تحسين محركات البحث", en: "Search visibility" } },
-  { value: "geo", label: { ar: "الظهور في البحث بالذكاء الاصطناعي", en: "Generative Engine Optimization" } },
-  { value: "local-seo", label: { ar: "تحسين الظهور المحلي وخرائط قوقل", en: "Local SEO and Google Maps" } },
+  { value: "media-buying", label: { ar: "شراء الإعلانات (إعلانات مدفوعة)", en: "Media buying (paid ads)" } },
+  { value: "store-design", label: { ar: "تصميم المتاجر (UI/UX)", en: "Store design (UI/UX)" } },
+  { value: "branding", label: { ar: "الهوية والعلامة", en: "Branding" } },
+  { value: "content-creation", label: { ar: "صناعة المحتوى", en: "Content creation" } },
 ];
 
 export type ServiceIcon =
@@ -41,6 +36,10 @@ export type ServicePage = {
   slug: string;
   icon: ServiceIcon;
   title: Text;
+  /** Short label for the navbar dropdown and footer. */
+  nav: Text;
+  /** Tiny descriptor shown next to the label. */
+  navNote: Text;
   promise: Text;
   from: string;
   customPrice?: boolean;
@@ -49,11 +48,21 @@ export type ServicePage = {
   stats: { value: Text; label: Text }[];
 };
 
+/** Cover photo per service, used by the navbar menu and the home accordion. */
+export const SERVICE_IMAGES: Record<string, string> = {
+  "media-buying": "/media/poster.jpg",
+  "store-design": "/media/store.jpg",
+  branding: "/media/bags.jpg",
+  "content-creation": "/media/snap.jpg",
+};
+
 export const SERVICES: ServicePage[] = [
   {
-    slug: "advertisement",
+    slug: "media-buying",
     icon: "ads",
-    title: { ar: "إدارة الإعلانات", en: "Ads management" },
+    title: { ar: "شراء الإعلانات (إعلانات مدفوعة)", en: "Media buying (paid ads)" },
+    nav: { ar: "شراء الإعلانات", en: "Media buying" },
+    navNote: { ar: "إعلانات مدفوعة", en: "Paid ads" },
     promise: {
       ar: "نصرف ميزانيتك على المنصات اللي السعودي يفتحها كل يوم: سناب شات، تيك توك، قوقل، وانستقرام. نقيس بالريال لا بالانطباعات.",
       en: "We put your budget on the apps Saudis open every day: Snapchat, TikTok, Google, and Instagram. We measure in riyals, not impressions.",
@@ -62,7 +71,7 @@ export const SERVICES: ServicePage[] = [
     includes: [
       { title: { ar: "صياغة الإعلان", en: "Ad copy" }, text: { ar: "نصوص قصيرة باللهجة اللي يفهمها عميلك، مو ترجمة إنجليزي.", en: "Short copy in the dialect your customer speaks — not translated English." } },
       { title: { ar: "استهداف السوق السعودي", en: "Saudi targeting" }, text: { ar: "مدن، اهتمامات، وأوقات الذروة في الرياض وجدة والدمام.", en: "Cities, interests, and peak hours in Riyadh, Jeddah, and Dammam." } },
-      { title: { ar: "إطلاق الحملات", en: "Launch" }, text: { ar: "سناب، تيك توك، قوقل، وميتا — حسب المنتج والجمهور.", en: "Snapchat, TikTok, Google, and Meta — matched to the product and audience." } },
+      { title: { ar: "إطلاق الحملات", en: "Campaign launch" }, text: { ar: "سناب، تيك توك، قوقل، وميتا — حسب المنتج والجمهور.", en: "Snapchat, TikTok, Google, and Meta — matched to the product and audience." } },
       { title: { ar: "تحسين العائد", en: "Return" }, text: { ar: "نراقب ROAS وCPA ونعدّل أسبوعيًا، مو في آخر الشهر.", en: "We watch ROAS and CPA and adjust weekly, not at month-end." } },
       { title: { ar: "اختبارات A/B", en: "A/B tests" }, text: { ar: "صورتين، نصّين، عرضين. اللي يبيع نكبّر ميزانيته.", en: "Two images, two lines, two offers. We scale the one that sells." } },
       { title: { ar: "تقرير شهري بالعربي", en: "Monthly Arabic report" }, text: { ar: "صرف، مبيعات، تكلفة الطلب — واضح لصاحب المنشأة.", en: "Spend, sales, cost per order — clear for the business owner." } },
@@ -78,20 +87,82 @@ export const SERVICES: ServicePage[] = [
     ],
   },
   {
-    slug: "social-media",
-    icon: "social",
-    title: { ar: "إدارة المنصات", en: "Social management" },
+    slug: "store-design",
+    icon: "store",
+    title: { ar: "تصميم المتاجر (UI/UX)", en: "Store design (UI/UX)" },
+    nav: { ar: "تصميم المتاجر", en: "Store design" },
+    navNote: { ar: "UI/UX", en: "UI/UX" },
     promise: {
-      ar: "محتوى سناب وتيك توك وانستقرام بخطة شهرية، لهجة محلية، وجدولة ثابتة. الحساب يتكلم بصوت مشروعك.",
-      en: "Snapchat, TikTok, and Instagram with a monthly plan, local voice, and a fixed schedule. The account sounds like your business.",
+      ar: "نصمم تجربة متجرك من أول نظرة لحد الدفع: واجهة واضحة، رحلة شراء قصيرة، وتنفيذ على سلة أو زد جاهز لتتبع الإعلان.",
+      en: "We design your store experience from first glance to payment: a clear interface, a short buying path, and a Salla or Zid build that is ready to track ads.",
+    },
+    from: "5,999",
+    includes: [
+      { title: { ar: "رحلة المستخدم", en: "User flows" }, text: { ar: "نرسم الطريق من الإعلان إلى صفحة المنتج إلى الدفع، ونشيل أي خطوة زايدة.", en: "We map the path from ad to product page to payment and remove every extra step." } },
+      { title: { ar: "تصميم الواجهة UI", en: "Interface design" }, text: { ar: "الصفحة الرئيسية، التصنيفات، وصفحة المنتج بهوية متجرك وخطوط عربية مقروءة.", en: "Home, collections, and product pages in your identity with readable Arabic type." } },
+      { title: { ar: "تجربة الجوال أولًا", en: "Mobile first" }, text: { ar: "أغلب الطلبات من الجوال، فنبدأ التصميم منه ونتأكد أن الأزرار تنضغط بإبهام واحد.", en: "Most orders come from phones, so we start there and make sure buttons work with one thumb." } },
+      { title: { ar: "تجربة الشراء", en: "Checkout UX" }, text: { ar: "مدى وآبل باي والتقسيط وخطوات أقل، عشان العميل ما يتراجع عند الدفع.", en: "Mada, Apple Pay, installments, and fewer steps so customers do not drop at payment." } },
+      { title: { ar: "التنفيذ على سلة وزد", en: "Salla and Zid build" }, text: { ar: "نطبق التصميم داخل المنصة، نرفع المنتجات، ونضبط السرعة.", en: "We build the design inside the platform, load the catalog, and tune speed." } },
+      { title: { ar: "جاهزية الإعلان", en: "Tracking ready" }, text: { ar: "بكسل سناب وتيك توك وقوقل وميتا قبل الإطلاق، عشان الصرف ما يضيع.", en: "Snap, TikTok, Google, and Meta pixels before launch so spend is not wasted." } },
+    ],
+    why: {
+      ar: "أكثر من 68 ألف تاجر يبيعون على سلة. المتجر الحلو بدون رحلة شراء واضحة وتتبع إعلاني متجر يتفرّج عليه الناس وما يطلبون.",
+      en: "More than 68,000 merchants sell on Salla. A beautiful store with no clear buying path and no tracking is a store people browse and do not buy from.",
+    },
+    stats: [
+      { value: { ar: "48٪", en: "48%" }, label: { ar: "تحسين تحويل بعد إعادة تصميم", en: "conversion lift after redesign" } },
+      { value: { ar: "+20", en: "+20" }, label: { ar: "متجر صممناه", en: "stores designed" } },
+      { value: { ar: "4.9/5", en: "4.9/5" }, label: { ar: "تقييم العملاء", en: "client rating" } },
+    ],
+  },
+  {
+    slug: "branding",
+    icon: "design",
+    title: { ar: "الهوية والعلامة", en: "Branding" },
+    nav: { ar: "الهوية والعلامة", en: "Branding" },
+    navNote: { ar: "هوية", en: "Identity" },
+    promise: {
+      ar: "هوية تخدم البيع: شعار، ألوان، خطوط، ونبرة صوت يستخدمها فريقك كل أسبوع، مو ملف يتركن في جهاز.",
+      en: "Identity that sells: a mark, colors, type, and a voice your team uses every week — not a file that sits on a drive.",
+    },
+    from: "",
+    customPrice: true,
+    includes: [
+      { title: { ar: "الشعار والرمز", en: "Logo and mark" }, text: { ar: "شعار عربي وإنجليزي يقرأ بوضوح على الجوال واللوحات والتغليف.", en: "An Arabic and English mark that reads clearly on phones, signage, and packaging." } },
+      { title: { ar: "الألوان والخطوط", en: "Color and type" }, text: { ar: "لوحة ألوان وخطوط عربية تعطي الإعلان والمتجر نفس الشخصية.", en: "A palette and Arabic type that give ads and the store one personality." } },
+      { title: { ar: "نبرة الصوت", en: "Brand voice" }, text: { ar: "كيف تتكلم علامتك: كلمات نستخدمها، وكلمات نتجنبها، وبلهجة السوق.", en: "How your brand speaks: words we use, words we avoid, in the market’s voice." } },
+      { title: { ar: "قوالب جاهزة", en: "Templates" }, text: { ar: "قصص وبنرات وبطاقات منتج يقدر فريقك يعدّلها بدون مصمم.", en: "Stories, banners, and product cards your team can edit without a designer." } },
+      { title: { ar: "دليل الاستخدام", en: "Brand guidelines" }, text: { ar: "ملف واضح يحدد المسافات والاستخدامات الصحيحة والخاطئة.", en: "A clear file for spacing and the right and wrong ways to use the identity." } },
+      { title: { ar: "مطبوعات", en: "Print" }, text: { ar: "كروت، رول أب، وأوراق رسمية لو احتجت حضورًا أرضيًا.", en: "Cards, roll-ups, and letterhead if you need an offline presence." } },
+    ],
+    why: {
+      ar: "في سوق مزدحم بالإعلانات العمودية، العلامة الضعيفة تأكل الميزانية قبل ما يوصل العميل. الهوية الواضحة تخلي كل ريال إعلان يشتغل أكثر.",
+      en: "In a feed full of vertical ads, a weak brand spends the budget before the customer arrives. A clear identity makes every riyal of advertising work harder.",
+    },
+    stats: [
+      { value: { ar: "+1,000", en: "+1,000" }, label: { ar: "تصميم نفّذناه", en: "designs delivered" } },
+      { value: { ar: "95٪", en: "95%" }, label: { ar: "التزام بالتسليم", en: "on-time delivery" } },
+      { value: { ar: "+10", en: "+10" }, label: { ar: "هويات أعدنا بناءها", en: "identities rebuilt" } },
+    ],
+  },
+  {
+    slug: "content-creation",
+    icon: "social",
+    title: { ar: "صناعة المحتوى", en: "Content creation" },
+    nav: { ar: "صناعة المحتوى", en: "Content creation" },
+    navNote: { ar: "محتوى", en: "Content" },
+    promise: {
+      ar: "محتوى سناب وتيك توك وانستقرام بخطة شهرية ولهجة محلية: فيديو قصير، تصوير، وكتابة. الحساب يتكلم بصوت مشروعك.",
+      en: "Snapchat, TikTok, and Instagram content on a monthly plan in a local voice: short video, photography, and writing. The account sounds like your business.",
     },
     from: "2,000",
     includes: [
       { title: { ar: "خطة محتوى شهرية", en: "Monthly plan" }, text: { ar: "تقويم واضح: قصص، ريلز، عروض، ومحتوى يثبت الثقة.", en: "A clear calendar: stories, reels, offers, and trust-building posts." } },
+      { title: { ar: "فيديو قصير", en: "Short video" }, text: { ar: "ريلز وتيك توك وسناب بإيقاع سريع وأول ثلاث ثواني تمسك المشاهد.", en: "Reels, TikToks, and Snaps with a fast pace and a first three seconds that hold the viewer." } },
+      { title: { ar: "تصوير المنتج", en: "Product shoots" }, text: { ar: "صور وفيديو للمنتج بإضاءة وزوايا تناسب الإعلان والمتجر.", en: "Photo and video of the product, lit and framed for ads and the store." } },
       { title: { ar: "كتابة باللهجة السعودية", en: "Saudi voice" }, text: { ar: "نكتب كما يتكلم عميلك، مو فصحى معلّبة.", en: "We write the way your customer talks, not canned formal Arabic." } },
-      { title: { ar: "تصميم المنشورات", en: "Creative" }, text: { ar: "قصص وبنرات وبطاقات منتج بنفس الهوية.", en: "Stories, banners, and product cards in one identity." } },
       { title: { ar: "نشر وجدولة", en: "Publishing" }, text: { ar: "نلتزم بمواعيد الذروة، خصوصًا بعد العصر والمساء.", en: "We post at peak hours, especially late afternoon and evening." } },
-      { title: { ar: "تفاعل وتحليل", en: "Engagement" }, text: { ar: "ردود، الموثق، وتقرير شهري بالأرقام اللي تهمك.", en: "Replies, inbox, and a monthly report on the numbers that matter." } },
+      { title: { ar: "تفاعل وتقرير", en: "Engagement and report" }, text: { ar: "ردود، رسائل، وتقرير شهري بالأرقام اللي تهمك.", en: "Replies, inbox, and a monthly report on the numbers that matter." } },
     ],
     why: {
       ar: "سناب شات يوصل قرابة 90٪ من البالغين في السعودية. تيك توك هو أكبر جمهور. لو المحتوى منسوخ من انستقرام، السوق يحس فورًا.",
@@ -103,189 +174,25 @@ export const SERVICES: ServicePage[] = [
       { value: { ar: "شهري", en: "Monthly" }, label: { ar: "تقرير ثابت", en: "fixed report" } },
     ],
   },
-  {
-    slug: "graphic-design",
-    icon: "design",
-    title: { ar: "التصميم والهوية", en: "Design and identity" },
-    promise: {
-      ar: "تصاميم تخدم البيع: إعلان، متجر، هوية. مو ديكور يملأ الفراغ.",
-      en: "Design that sells: ads, store, identity. Not decoration that fills space.",
-    },
-    from: "249",
-    includes: [
-      { title: { ar: "إعلانات المنصات", en: "Platform ads" }, text: { ar: "مقاسات سناب وتيك توك وانستقرام وقوقل جاهزة للإطلاق.", en: "Snapchat, TikTok, Instagram, and Google sizes ready to launch." } },
-      { title: { ar: "مواد المتجر", en: "Store assets" }, text: { ar: "سلايدر سلة/زد، بنرات، وبطاقات منتج.", en: "Salla/Zid sliders, banners, and product cards." } },
-      { title: { ar: "محتوى المنصات", en: "Social templates" }, text: { ar: "قصص، أغلفة، قوالب ثابتة للهوية.", en: "Stories, covers, and reusable identity templates." } },
-      { title: { ar: "مطبوعات", en: "Print" }, text: { ar: "كروت، رول أب، أوراق رسمية إذا احتجت حضورًا أرضيًا.", en: "Cards, roll-ups, and letterhead when you need an offline presence." } },
-      { title: { ar: "تطوير الهوية", en: "Identity" }, text: { ar: "شعار، ألوان، وملف استخدام يقدر فريقك يكمل عليه.", en: "Mark, colors, and a usage file your team can keep working from." } },
-    ],
-    why: {
-      ar: "في سوق مزدحم بالإعلانات العمودية، التصميم الضعيف يأكل الميزانية قبل ما يوصل العميل.",
-      en: "In a feed full of vertical ads, weak design spends the budget before the customer arrives.",
-    },
-    stats: [
-      { value: { ar: "+1,000", en: "+1,000" }, label: { ar: "تصميم نفّذناه", en: "designs delivered" } },
-      { value: { ar: "95٪", en: "95%" }, label: { ar: "التزام بالتسليم", en: "on-time delivery" } },
-      { value: { ar: "+10", en: "+10" }, label: { ar: "هويات أعدنا بناءها", en: "identities rebuilt" } },
-    ],
-  },
-  {
-    slug: "online-stores",
-    icon: "store",
-    title: { ar: "متاجر سلة وزد", en: "Salla and Zid stores" },
-    promise: {
-      ar: "نبني أو نحسّن متجرك على المنصات اللي التاجر السعودي يبيع منها فعلًا: سلة وزد. تجربة شراء قصيرة، وسرعة، وربط للإعلانات.",
-      en: "We build or fix stores on the platforms Saudi merchants actually sell from: Salla and Zid. Short checkout, speed, and ads ready to track.",
-    },
-    from: "5,999",
-    includes: [
-      { title: { ar: "تجربة الشراء", en: "Checkout" }, text: { ar: "تقليل الخطوات من الإعلان إلى الدفع (مدى / Apple Pay / تقسيط).", en: "Fewer steps from ad to pay (Mada / Apple Pay / installments)." } },
-      { title: { ar: "رفع المنتجات", en: "Catalog" }, text: { ar: "صور، وصف عربي واضح، وتصنيف يسهّل البحث داخل المتجر.", en: "Photos, clear Arabic copy, and categories people can find." } },
-      { title: { ar: "سرعة المتجر", en: "Speed" }, text: { ar: "صفحات خفيفة؛ العميل ما ينتظر على شبكة الجوال.", en: "Light pages. The customer should not wait on mobile data." } },
-      { title: { ar: "بنرات وعروض", en: "Banners" }, text: { ar: "نكتب ونصمّم الواجهة الأولى اللي تشوفها الزائرة.", en: "We write and design the first screen a visitor sees." } },
-      { title: { ar: "جاهزية الإعلان", en: "Tracking" }, text: { ar: "بكسل سناب وتيك توك وقوقل وميتا، عشان الصرف ما يضيع.", en: "Snap, TikTok, Google, and Meta pixels so spend is not wasted." } },
-    ],
-    why: {
-      ar: "أكثر من 68 ألف تاجر يبيعون على سلة. المتجر الحلو بدون تتبع إعلاني متجر يتفرّج عليه الناس وما يطلبون.",
-      en: "More than 68,000 merchants sell on Salla. A beautiful store with no tracking is a store people browse and do not buy.",
-    },
-    stats: [
-      { value: { ar: "48٪", en: "48%" }, label: { ar: "تحسين تحويل بعد إعادة تصميم", en: "conversion lift after redesign" } },
-      { value: { ar: "+20", en: "+20" }, label: { ar: "متجر صممناه", en: "stores designed" } },
-      { value: { ar: "4.9/5", en: "4.9/5" }, label: { ar: "تقييم العملاء", en: "client rating" } },
-    ],
-  },
-  {
-    slug: "seo",
-    title: { ar: "الظهور في قوقل", en: "Google visibility" },
-    icon: "seo",
-    promise: {
-      ar: "باقة ثلاثة أشهر تخلّي «متجر عود الرياض» أو «عطور جدة» يوصّلون لك، مو للمنافس. بعدها شهرين متابعة.",
-      en: "A three-month package so “oud store Riyadh” or “Jeddah perfume” reach you, not a competitor. Then two months of follow-up.",
-    },
-    from: "",
-    customPrice: true,
-    includes: [
-      { title: { ar: "كلمات السوق المحلي", en: "Local queries" }, text: { ar: "نشتغل على بحث السعوديين بالعربي، بما فيه اللهجات والأسماء التجارية.", en: "We work the Arabic searches Saudis actually type, including dialect and brand names." } },
-      { title: { ar: "إصلاح الصفحات", en: "Page fixes" }, text: { ar: "عناوين، سرعة، وروابط داخلية من غير حشو أو سبام.", en: "Titles, speed, and internal links — no stuffing or spam." } },
-      { title: { ar: "محتوى يجاوب", en: "Useful content" }, text: { ar: "مقالات تفيد العميل وتبني ثقة قوقل، مو تكرار منسوخ.", en: "Articles that help the customer and earn Google’s trust, not copied filler." } },
-      { title: { ar: "تقارير شهرية", en: "Monthly reports" }, text: { ar: "كلمات، زيارات، وطلبات — ثلاثة أشهر شغل وشهرين رصد.", en: "Queries, visits, and leads — three months of work, two months of watch." } },
-    ],
-    why: {
-      ar: "الإعلان يوقف إذا وقف الصرف. البحث يبني أصلًا طويلًا لمنشأتك في السوق السعودي.",
-      en: "Ads stop when spend stops. Search builds a longer asset for your business in Saudi.",
-    },
-    stats: [
-      { value: { ar: "3 أشهر", en: "3 months" }, label: { ar: "مدة التنفيذ", en: "build period" } },
-      { value: { ar: "شهران", en: "2 months" }, label: { ar: "متابعة بعدها", en: "follow-up after" } },
-      { value: { ar: "شهري", en: "Monthly" }, label: { ar: "تقرير عربي", en: "Arabic report" } },
-    ],
-  },
-  {
-    slug: "geo",
-    icon: "geo",
-    title: { ar: "الظهور في البحث بالذكاء الاصطناعي", en: "Generative Engine Optimization" },
-    promise: {
-      ar: "نجهّز علامتك عشان تظهر في إجابات أدوات الذكاء الاصطناعي — قوقل AI Overviews، وChatGPT، ومنصات مشابهة — بنفس وضوح ظهورك في البحث التقليدي.",
-      en: "We prepare your brand to show up in AI answers — Google AI Overviews, ChatGPT, and similar tools — with the same clarity you want in classic search.",
-    },
-    from: "",
-    customPrice: true,
-    includes: [
-      { title: { ar: "مصادر قابلة للاستشهاد", en: "Citable sources" }, text: { ar: "صفحات عربية واضحة تقدر النماذج تعتمد عليها بدل ما تقتبس من منافس.", en: "Clear Arabic pages models can cite, instead of quoting a competitor." } },
-      { title: { ar: "كيان العلامة", en: "Brand entity" }, text: { ar: "نوحّد اسمك، خدماتك، ومدنك عبر الموقع والملفات العامة.", en: "We align your name, services, and cities across the site and public profiles." } },
-      { title: { ar: "أسئلة السوق", en: "Market questions" }, text: { ar: "نغطّي الأسئلة اللي العميل السعودي يسألها قبل ما يشتري.", en: "We cover the questions a Saudi customer asks before they buy." } },
-      { title: { ar: "قياس الإشارات", en: "Signal tracking" }, text: { ar: "نرصد أين تُذكر علامتك في نتائج البحث التوليدي، ونعدّل المحتوى وفق ذلك.", en: "We watch where your brand is mentioned in generative results and adjust the content." } },
-    ],
-    why: {
-      ar: "البحث تغيّر: العميل يسأل أداة ذكاء اصطناعي قبل ما يضغط عشر روابط. إذا ما كنت مصدرًا، يروح الطلب لغيرك.",
-      en: "Search changed: people ask an AI tool before they click ten links. If you are not a source, the demand goes elsewhere.",
-    },
-    stats: [
-      { value: { ar: "AI", en: "AI" }, label: { ar: "ظهور في الإجابات التوليدية", en: "visibility in generative answers" } },
-      { value: { ar: "عربي", en: "Arabic" }, label: { ar: "محتوى يُستشهد به", en: "citable content" } },
-      { value: { ar: "شهري", en: "Monthly" }, label: { ar: "مراجعة للإشارات", en: "signal review" } },
-    ],
-  },
-  {
-    slug: "local-seo",
-    icon: "maps",
-    title: { ar: "تحسين الظهور المحلي", en: "Local SEO" },
-    promise: {
-      ar: "نخليك تظهر في خرائط قوقل والحزمة المحلية لما العميل يبحث عن خدمتك في الرياض أو جدة أو الدمام.",
-      en: "We get you into Google Maps and the local pack when someone searches for your service in Riyadh, Jeddah, or Dammam.",
-    },
-    from: "",
-    customPrice: true,
-    includes: [
-      { title: { ar: "ملف النشاط على قوقل", en: "Business Profile" }, text: { ar: "نضبط الاسم، الفئة، الصور، وساعات العمل باللهجة والمعلومات الصحيحة.", en: "We set the name, category, photos, and hours with the right Arabic details." } },
-      { title: { ar: "كلمات الحي والمدينة", en: "City and district queries" }, text: { ar: "نشتغل على بحث مثل «عطور الرياض» أو «عيادة في العليا».", en: "We work queries such as “oud Riyadh” or “clinic in Olaya.”" } },
-      { title: { ar: "التقييمات والردود", en: "Reviews and replies" }, text: { ar: "خطة لجمع تقييمات حقيقية والرد عليها — بدون شراء تقييمات.", en: "A plan to collect real reviews and reply to them — we do not buy ratings." } },
-      { title: { ar: "اتساق العناوين", en: "NAP consistency" }, text: { ar: "نفس الاسم والرقم والعنوان في الموقع والأدلة حتى ما يتشتت قوقل.", en: "The same name, number, and address on the site and directories so Google is not confused." } },
-    ],
-    why: {
-      ar: "كثير من الطلب في السعودية يبدأ من الخريطة. ملف ضعيف يعني العميل يوقف عند المنافس الأقرب.",
-      en: "A lot of Saudi demand starts on the map. A weak profile means the customer stops at the nearer competitor.",
-    },
-    stats: [
-      { value: { ar: "Maps", en: "Maps" }, label: { ar: "ظهور على خرائط قوقل", en: "Google Maps visibility" } },
-      { value: { ar: "3 مدن", en: "3 cities" }, label: { ar: "الرياض وجدة والدمام", en: "Riyadh, Jeddah, Dammam" } },
-      { value: { ar: "محلي", en: "Local" }, label: { ar: "حزمة النتائج القريبة", en: "local pack" } },
-    ],
-  },
-  {
-    slug: "consulting",
-    icon: "consult",
-    title: { ar: "الاستشارة والاستراتيجية", en: "Marketing consulting and strategy" },
-    promise: {
-      ar: "قبل ما تصرف على الإعلان، نحدد لك التمركز، الجمهور، ومزيج القنوات المناسب لسوقك السعودي.",
-      en: "Before you spend on ads, we set positioning, audience, and the channel mix that fits your Saudi market.",
-    },
-    from: "",
-    customPrice: true,
-    includes: [
-      { title: { ar: "قراءة السوق", en: "Market read" }, text: { ar: "منافسونك، وين يشتري عميلك، وأي منصة تستحق الميزانية أولًا.", en: "Your competitors, where customers buy, and which platform deserves budget first." } },
-      { title: { ar: "التمركز الذهني", en: "Positioning" }, text: { ar: "جملة واحدة يفهمها العميل لما يشوفك بين عشر إعلانات.", en: "One sentence the customer understands when they see you among ten ads." } },
-      { title: { ar: "خطة القنوات", en: "Channel plan" }, text: { ar: "سناب، تيك توك، قوقل، مؤثرين، أو متجر — مو الستة مع بعض من اليوم الأول.", en: "Snapchat, TikTok, Google, creators, or the store — not all six on day one." } },
-      { title: { ar: "مؤشرات واضحة", en: "Clear KPIs" }, text: { ar: "نتفق على طلب، تكلفة، وهامش — مو إعجابات.", en: "We agree on orders, cost, and margin — not likes." } },
-    ],
-    why: {
-      ar: "الصرف بدون استراتيجية يشتري ضوضاء. الاستراتيجية تخبرك أين توقف وأين تكبّر.",
-      en: "Spend without a strategy buys noise. Strategy tells you where to stop and where to scale.",
-    },
-    stats: [
-      { value: { ar: "15 د", en: "15 min" }, label: { ar: "استشارة أولى سريعة", en: "first consult" } },
-      { value: { ar: "قناتان", en: "2 channels" }, label: { ar: "نبدأ بالاختبار لا بالتوسع", en: "test first, then expand" } },
-      { value: { ar: "الرياض", en: "Riyadh" }, label: { ar: "فريق يرد من هنا", en: "the team replies from here" } },
-    ],
-  },
-  {
-    slug: "influencer",
-    icon: "influencer",
-    title: { ar: "تسويق بالمؤثرين", en: "Influencer marketing" },
-    promise: {
-      ar: "نربطك بصنّاع محتوى سعوديين على سناب وتيك توك وانستقرام — باختيار يناسب المنتج، مو بعدد المتابعين فقط.",
-      en: "We match you with Saudi creators on Snapchat, TikTok, and Instagram — chosen for the product, not follower count alone.",
-    },
-    from: "",
-    customPrice: true,
-    includes: [
-      { title: { ar: "اختيار الصانع", en: "Creator fit" }, text: { ar: "جمهور محلي، لهجة، وسجل تعاونات قريبة من منتجك.", en: "A local audience, the right voice, and collaborations close to your product." } },
-      { title: { ar: "الموجز والعرض", en: "Brief and offer" }, text: { ar: "نص واضح، زاوية تصوير، ورابط سلة أو واتساب.", en: "Clear copy, a shooting angle, and a Salla or WhatsApp link." } },
-      { title: { ar: "التنفيذ والمتابعة", en: "Run and follow" }, text: { ar: "تنسيق النشر، مراجعة المادة، وتتبع الأكواد أو الروابط.", en: "We coordinate posting, review the asset, and track codes or links." } },
-      { title: { ar: "قياس الطلب", en: "Demand, not vanity" }, text: { ar: "نحسب الطلب والتكلفة، مو بس المشاهدات.", en: "We count orders and cost, not just views." } },
-    ],
-    why: {
-      ar: "المؤثر الغلط يصرف الميزانية على جمهور ما يشتري. الاختيار المحلي أخصر من حملة مشاهدات فارغة.",
-      en: "The wrong creator spends the budget on people who will not buy. A local match is cheaper than empty views.",
-    },
-    stats: [
-      { value: { ar: "سناب", en: "Snap" }, label: { ar: "وتيك توك وانستقرام", en: "TikTok and Instagram" } },
-      { value: { ar: "محلي", en: "Local" }, label: { ar: "صنّاع من السوق السعودي", en: "creators from this market" } },
-      { value: { ar: "الطلب", en: "Orders" }, label: { ar: "مقياس التعاون", en: "how we score a collab" } },
-    ],
-  },
 ];
+
+/** Each service lives at its own top-level page: /media-buying, /branding, … */
+export function servicePath(slug: string) {
+  return `/${slug}`;
+}
+
+/** Old slugs and removed services still resolve somewhere sensible. */
+export const LEGACY_SERVICE_SLUGS: Record<string, string | null> = {
+  advertisement: "media-buying",
+  "social-media": "content-creation",
+  "graphic-design": "branding",
+  "online-stores": "store-design",
+  seo: null,
+  geo: null,
+  "local-seo": null,
+  consulting: null,
+  influencer: null,
+};
 
 export const PACKAGES = [
   {
@@ -346,7 +253,7 @@ export const PORTFOLIO: {
     city: { ar: "الرياض وجدة", en: "Riyadh and Jeddah" },
     date: { ar: "نوفمبر 2025", en: "Nov, 2025" },
     img: "/media/bags.jpg",
-    to: "/services/online-stores",
+    to: "/store-design",
     text: {
       ar: "بناء وتحسين واجهات سلة: منتجات، بنرات، وربط بكسل الإعلان قبل إطلاق الحملات.",
       en: "Building and fixing Salla storefronts: products, banners, and ad pixels before campaigns go live.",
@@ -359,7 +266,7 @@ export const PORTFOLIO: {
     city: { ar: "المملكة", en: "Saudi Arabia" },
     date: { ar: "أغسطس 2025", en: "Aug, 2025" },
     img: "/media/snap.jpg",
-    to: "/services/social-media",
+    to: "/content-creation",
     text: {
       ar: "إعلانات قصص وفلاتر لمشاريع تجزئة وخدمات محلية — المنصة اللي 89٪ من البالغين يفتحونها.",
       en: "Story and filter ads for retail and local services — the app about 89% of adults still open.",
@@ -372,7 +279,7 @@ export const PORTFOLIO: {
     city: { ar: "السعودية", en: "Saudi Arabia" },
     date: { ar: "يونيو 2025", en: "Jun, 2025" },
     img: "/media/pack.jpg",
-    to: "/services/graphic-design",
+    to: "/branding",
     text: {
       ar: "ملفات هوية لمشاريع ناشئة: شعار، ألوان، وقوالب إعلان يستخدمها فريقك كل أسبوع.",
       en: "Identity files for growing brands: mark, colors, and ad templates your team uses every week.",
@@ -385,7 +292,7 @@ export const PORTFOLIO: {
     city: { ar: "السعودية", en: "Saudi Arabia" },
     date: { ar: "مارس 2025", en: "Mar, 2025" },
     img: "/media/phone.jpg",
-    to: "/services/advertisement",
+    to: "/media-buying",
     text: {
       ar: "إعلانات عمودية مربوطة بسلة أو واتساب — نفس المنصة اللي الجمهور يفتحها أطول وقت في اليوم.",
       en: "Vertical ads tied to Salla or WhatsApp — the app people here stay in the longest.",
@@ -429,7 +336,7 @@ export const PROOFS = [
     },
     metric: { ar: "+12", en: "+12" },
     metricLabel: { ar: "ROAS لعملاء", en: "ROAS for clients" },
-    to: "/services/advertisement",
+    to: "/media-buying",
   },
   {
     id: "visits",
@@ -571,17 +478,5 @@ export function getPost(slug: string) {
 }
 
 export function serviceLeadValue(slug: string) {
-  return (
-    {
-      advertisement: "ads",
-      "social-media": "social",
-      "graphic-design": "creative",
-      "online-stores": "store",
-      seo: "seo",
-      geo: "geo",
-      "local-seo": "local-seo",
-      consulting: "consult",
-      influencer: "influencer",
-    }[slug] ?? "ads"
-  );
+  return SERVICES.some((service) => service.slug === slug) ? slug : "media-buying";
 }

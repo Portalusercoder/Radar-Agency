@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ui } from "../copy";
-import { SERVICES, serviceLeadValue } from "../data";
+import { SERVICES, serviceLeadValue, servicePath } from "../data";
 import { useI18n } from "../i18n";
 import { useLead } from "../lead";
 
@@ -104,7 +104,7 @@ export function ServicesStack() {
               </div>
               <p>{t(service.promise)}</p>
               <div className="svc-actions">
-                <Link to={`/services/${service.slug}`}>{t(ui.home.learnMore)}</Link>
+                <Link to={servicePath(service.slug)}>{t(ui.home.learnMore)}</Link>
                 <button type="button" onClick={() => openLead({ service: serviceLeadValue(service.slug) })}>
                   {t(ui.home.requestService)}
                 </button>

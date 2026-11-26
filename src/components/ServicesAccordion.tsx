@@ -1,44 +1,15 @@
 import { Link } from "react-router-dom";
 import { ui } from "../copy";
+import { SERVICE_IMAGES as IMAGES, SERVICES as SERVICE_PAGES, servicePath } from "../data";
 import { useI18n } from "../i18n";
-import type { Text } from "../i18n";
 
-const SERVICES: {
-  slug: string;
-  title: Text;
-  meta: Text;
-  text: Text;
-  image: string;
-}[] = [
-  {
-    slug: "social-media",
-    title: ui.home.svcSocialTitle,
-    meta: { ar: "منصات", en: "Platforms" },
-    text: ui.home.svcSocialText,
-    image: "/media/snap.jpg",
-  },
-  {
-    slug: "graphic-design",
-    title: ui.home.svcBrandTitle,
-    meta: { ar: "هوية", en: "Identity" },
-    text: ui.home.svcBrandText,
-    image: "/media/bags.jpg",
-  },
-  {
-    slug: "online-stores",
-    title: ui.home.svcStoreTitle,
-    meta: { ar: "متاجر", en: "Commerce" },
-    text: ui.home.svcStoreText,
-    image: "/media/store.jpg",
-  },
-  {
-    slug: "advertisement",
-    title: ui.home.svcAdsTitle,
-    meta: { ar: "إعلان", en: "Paid media" },
-    text: ui.home.svcAdsText,
-    image: "/media/poster.jpg",
-  },
-];
+const SERVICES = SERVICE_PAGES.map((service) => ({
+  slug: service.slug,
+  title: service.title,
+  meta: service.navNote,
+  text: service.promise,
+  image: IMAGES[service.slug],
+}));
 
 export function ServicesAccordion() {
   const { t, isAr } = useI18n();
@@ -76,7 +47,7 @@ export function ServicesAccordion() {
               {SERVICES.map((item) => (
                 <li key={item.slug}>
                   <Link
-                    to={`/services/${item.slug}`}
+                    to={servicePath(item.slug)}
                     className="journal-link journal-link--rich"
                     style={{ ["--svc-img" as string]: `url(${item.image})` }}
                   >
@@ -95,9 +66,6 @@ export function ServicesAccordion() {
           </div>
         </div>
 
-        <Link to="/services/social-media" className="journal-all">
-          {t(ui.home.seeServices)}
-        </Link>
       </div>
     </section>
   );

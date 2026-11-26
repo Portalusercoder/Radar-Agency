@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { navLinks, ui } from "../copy";
-import { SITE } from "../data";
+import { SERVICE_IMAGES, SERVICES, servicePath, SITE } from "../data";
 import { useI18n } from "../i18n";
 import { useLead } from "../lead";
 import { Logo } from "./Logo";
@@ -12,14 +12,53 @@ export function Header() {
   const { pathname, hash } = useLocation();
   const [menu, setMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    setMenu(false);
-  }, [pathname, hash]);
-
+  const [drop, setDrop] = useState(false);
+  const dropTimer = useRef<number | undefined>(undefined);
+  const dropRef = useRef<HTMLDivElement>(null);
   const [pill, setPill] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
+
+  const hoverOpened = useRef(false);
+
+  const openDrop = useCallback(() => {
+    window.clearTimeout(dropTimer.current);
+    setDrop((open) => {
+      if (!open) hoverOpened.current = true;
+      return true;
+    });
+  }, []);
+
+  const closeDrop = useCallback(() => {
+    hoverOpened.current = false;
+    window.clearTimeout(dropTimer.current);
+    dropTimer.current = window.setTimeout(() => setDrop(false), 140);
+  }, []);
+
+  useEffect(() => {
+    setMenu(false);
+    setDrop(false);
+  }, [pathname, hash]);
+
+  useEffect(() => {
+    if (hidden) setDrop(false);
+  }, [hidden]);
+
+  useEffect(() => {
+    if (!drop) return;
+    const onDown = (event: MouseEvent) => {
+      if (dropRef.current && !dropRef.current.contains(event.target as Node)) setDrop(false);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setDrop(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [drop]);
 
   useEffect(() => {
     lastY.current = window.scrollY;
@@ -67,11 +106,75 @@ export function Header() {
         <Logo />
 
         <nav className="nav-bar__links" aria-label={t(ui.nav.main)}>
-          {navLinks.map((link) => (
-            <Link key={link.to} to={link.to} className="nav-bar__link">
-              {t(link.label)}
-            </Link>
-          ))}
+          {navLinks.map((link) =>
+            link.menu ? (
+              <div
+                key={link.to}
+                ref={dropRef}
+                className="nav-drop"
+                onMouseEnter={openDrop}
+                onMouseLeave={closeDrop}
+                onBlur={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDrop(false);
+                }}
+              >
+                <button
+                  type="button"
+                  className="nav-bar__link nav-drop__trigger"
+                  aria-haspopup="true"
+                  aria-expanded={drop}
+                  aria-controls="nav-services-menu"
+                  onClick={() => {
+                    // A mouse click right after hover-open should keep the menu open;
+                    // touch and keyboard users still get a real toggle.
+                    if (hoverOpened.current) {
+                      hoverOpened.current = false;
+                      setDrop(true);
+                    } else {
+                      setDrop((value) => !value);
+                    }
+                  }}
+                >
+                  {t(link.label)}
+                  <svg className="nav-drop__chev" viewBox="0 0 12 12" width="11" height="11" fill="none" aria-hidden>
+                    <path d="m2.5 4.5 3.5 3.5 3.5-3.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <div id="nav-services-menu" className={`nav-drop__panel${drop ? " is-open" : ""}`}>
+                  <div className="nav-drop__card">
+                    {SERVICES.map((service) => (
+                      <div key={service.slug} className="nav-drop__col">
+                        <Link to={servicePath(service.slug)} className="nav-drop__photo" tabIndex={-1} aria-hidden>
+                          <img src={SERVICE_IMAGES[service.slug]} alt="" loading="lazy" decoding="async" />
+                          <span>{t(service.nav)}</span>
+                        </Link>
+                        <p className="nav-drop__blurb">{t(service.promise)}</p>
+                        <ul className="nav-drop__list">
+                          {service.includes.slice(0, 3).map((item) => (
+                            <li key={item.title.en}>
+                              <Link to={servicePath(service.slug)} className="nav-drop__item">
+                                {t(item.title)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                        <Link to={servicePath(service.slug)} className="nav-drop__more">
+                          {t(ui.nav.explore)} {t(service.nav)}
+                          <svg viewBox="0 0 12 12" width="11" height="11" fill="none" aria-hidden>
+                            <path d="M3 9 9 3M4.5 3H9v4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link key={link.to} to={link.to} className="nav-bar__link">
+                {t(link.label)}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="nav-bar__tools">
@@ -121,19 +224,42 @@ export function Header() {
         style={{ ["--cx" as string]: isAr ? "12%" : "88%" }}
       >
         <nav className="flex flex-col" aria-label={t(ui.nav.main)}>
-          {navLinks.map((link, index) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setMenu(false)}
-              className="min-h-14 border-b border-line py-4 text-2xl text-night no-underline"
-            >
-              <span className="me-3 text-sm text-muted" dir="ltr">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              {t(link.label)}
-            </Link>
-          ))}
+          {navLinks.map((link, index) =>
+            link.menu ? (
+              <div key={link.to} className="border-b border-line py-4">
+                <p className="m-0 text-2xl text-night">
+                  <span className="me-3 text-sm text-muted" dir="ltr">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {t(link.label)}
+                </p>
+                <div className="mt-2 grid ps-10">
+                  {SERVICES.map((service) => (
+                    <Link
+                      key={service.slug}
+                      to={servicePath(service.slug)}
+                      onClick={() => setMenu(false)}
+                      className="min-h-11 py-2 text-lg text-muted no-underline"
+                    >
+                      {t(service.nav)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={link.to}
+                to={link.to}
+                onClick={() => setMenu(false)}
+                className="min-h-14 border-b border-line py-4 text-2xl text-night no-underline"
+              >
+                <span className="me-3 text-sm text-muted" dir="ltr">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                {t(link.label)}
+              </Link>
+            ),
+          )}
           <a href={SITE.dashboard} className="min-h-14 py-4 text-2xl text-muted no-underline">
             {t(ui.nav.login)}
           </a>
