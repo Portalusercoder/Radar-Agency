@@ -11,7 +11,10 @@
 
 .wwa-stage {
   position: relative;
-  height: 100svh;
+  /* Large viewport height: the colour always reaches the bottom edge on phones,
+     even after the browser toolbar collapses. */
+  height: 100vh;
+  height: 100lvh;
   overflow: hidden;
 }
 
@@ -62,7 +65,8 @@ html[dir="rtl"] .wwa-title {
 
 .wwa-hint {
   inset-inline: 0;
-  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  /* Keeps the cue above the toolbar while it is still expanded. */
+  bottom: calc(max(1.5rem, env(safe-area-inset-bottom)) + 100lvh - 100svh);
   margin: 0;
   display: grid;
   place-items: center;

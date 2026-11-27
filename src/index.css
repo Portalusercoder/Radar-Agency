@@ -4313,3 +4313,49 @@ html[dir="rtl"] .wk-article__body {
     transition: none;
   }
 }
+
+/* Work carousel: swipe on touch, drag with the mouse */
+.work-rail {
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.work-rail:active {
+  cursor: grabbing;
+}
+
+/* Touch browsers (WebKit in particular) can paint a masked, blurred, transformed
+   track as blank, so drop the mask and blur there and rely on opacity and scale. */
+@media (hover: none), (max-width: 767px) {
+  .work-rail {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  html[dir="rtl"] .work-rail {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .work-slide,
+  .work-slide--prev,
+  .work-slide--next,
+  .work-slide--active {
+    filter: none;
+  }
+
+  .work-slide {
+    opacity: 0.45;
+  }
+
+  .work-slide--prev,
+  .work-slide--next {
+    opacity: 0.6;
+  }
+
+  .work-slide--active {
+    opacity: 1;
+  }
+}

@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
 import { ui } from "../copy";
 import { PORTFOLIO } from "../data";
 import { useI18n } from "../i18n";
 
 const AUTO_MS = 4200;
+const SWIPE_PX = 40;
 
 export function WorkCarousel() {
   const { t, isAr } = useI18n();
@@ -32,10 +33,38 @@ export function WorkCarousel() {
       setActive((current) => (current + 1) % total);
     }, AUTO_MS);
     return () => window.clearInterval(id);
-  }, [inView, paused, total]);
+    // `active` is a dependency so every manual change restarts the countdown.
+  }, [inView, paused, total, active]);
 
   const go = (index: number) => {
     setActive(((index % total) + total) % total);
+  };
+
+  // Swipe / drag: the track is always laid out left-to-right (also in RTL), so
+  // dragging left shows the next slide and dragging right the previous one.
+  const dragRef = useRef<{ x: number; y: number } | null>(null);
+  const swipedRef = useRef(false);
+
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    dragRef.current = { x: event.clientX, y: event.clientY };
+    swipedRef.current = false;
+    setPaused(true);
+  };
+
+  const endDrag = (event: PointerEvent<HTMLDivElement>, commit: boolean) => {
+    const start = dragRef.current;
+    dragRef.current = null;
+    if (start && commit) {
+      const dx = event.clientX - start.x;
+      const dy = event.clientY - start.y;
+      if (Math.abs(dx) >= SWIPE_PX && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        swipedRef.current = true;
+        go(active + (dx < 0 ? 1 : -1));
+      }
+    }
+    // Mouse users stay paused via hover; touch users resume right after the swipe.
+    if (event.pointerType !== "mouse") setPaused(false);
   };
 
   return (
@@ -73,7 +102,14 @@ export function WorkCarousel() {
         <p className="work-show__lead">{t(ui.work.lead)}</p>
       </div>
 
-      <div className="work-rail" aria-roledescription="carousel" aria-label={t(ui.home.workCasesTitle)}>
+      <div
+        className="work-rail"
+        aria-roledescription="carousel"
+        aria-label={t(ui.home.workCasesTitle)}
+        onPointerDown={onPointerDown}
+        onPointerUp={(event) => endDrag(event, true)}
+        onPointerCancel={(event) => endDrag(event, false)}
+      >
         <div
           className="work-rail__track"
           style={{ ["--active" as string]: active, ["--count" as string]: total }}
@@ -91,7 +127,13 @@ export function WorkCarousel() {
                   to={item.to ?? "/portfolio"}
                   className="work-slide__link"
                   tabIndex={role === "active" ? 0 : -1}
+                  draggable={false}
                   onClick={(event) => {
+                    if (swipedRef.current) {
+                      event.preventDefault();
+                      swipedRef.current = false;
+                      return;
+                    }
                     if (role !== "active") {
                       event.preventDefault();
                       go(index);
